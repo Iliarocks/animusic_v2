@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Animusic | {{ action }}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta+Mahee:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1><span>ani</span>music</h1>
+  </header>
+  <form>
+    <h1>{{ title }}</h1>
+    <input id="name-input" type="text" placeholder="Full name">
+    <input id="email-input" type="text" placeholder="Email">
+    <input id="password-input" type="password" placeholder="Password">
+    <button id="action-btn" type="button" name="button">{{ action }}</button>
+    <p>{{ question }}<span id="link">{{ link }}</span></p>
+  </form>
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyBblgZ4cy2FT0_Lydilueh3eeCl4IO7OPs",
+      authDomain: "animusic-dev.firebaseapp.com",
+      databaseURL: "https://animusic-dev.firebaseio.com",
+      projectId: "animusic-dev",
+      storageBucket: "animusic-dev.appspot.com",
+      messagingSenderId: "1064983100624",
+      appId: "1:1064983100624:web:8b4600c34bdc54faac32d5"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    window.link = '{{ link }}'
+    window.action = '{{ action }}';
+    window.new_path = '{{ new_path }}'
+  </script>
+  <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</body>
+
+</html>
