@@ -50,6 +50,7 @@ header > div > h1 {
   font-size: 27px;
   line-height: 40px;
   display: inline-block;
+  cursor: pointer;
 }
 h1 > span {
   color: var(--main);

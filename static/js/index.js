@@ -41,7 +41,7 @@ function simplifyNum() {
 function openAnimeEvent() {
   document.querySelectorAll('.anime-box').forEach(anime => {
     anime.addEventListener('click', function(e) {
-      window.location = `${window.origin}/anime/${e.target.id}`;
+      window.location = `${window.origin}/anime/${this.id}`;
     })
   })
 }
@@ -59,7 +59,7 @@ async function loadGenre(arr, genre) {
       </div>
     </div>`;
   }, '')
-  document.querySelector(`.${genre}`).innerHTML = genreHTML;
+  document.querySelector('.body').innerHTML +=`<h1>${genre}</h1><div class="${genre} genre-holder">${genreHTML}</div>`;
   openAnimeEvent();
 }
 
@@ -67,6 +67,8 @@ function loadAnime() {
   database.ref('/anime').once('value', function(snap) {
     var anime = Object.values(snap.val()).sort((a, b) => b.likes - a.likes).slice(0, 250);
     var genres = ['popular', 'shonen', 'isekai'];
+    if (window.innerWidth < 960 || window.screen.width < 960) genres = ['popular'];
+    console.log(genres)
     genres.forEach(genre => loadGenre(anime, genre));
   })
 }
@@ -129,6 +131,16 @@ document.querySelector('.create-prompt').addEventListener('click', function(e) {
 //close error
 closeErrorBtn.addEventListener('click', function(e) {
   document.querySelector('.error').style.right = '-360px';
+})
+
+//go to patreon
+document.querySelector('#patreon').addEventListener('click', function(e) {
+  window.location = 'https://www.patreon.com/iliarocks';
+})
+
+//reload
+document.querySelector('header > div > h1').addEventListener('click', function() {
+  window.location.reload();
 })
 
 //go sign up

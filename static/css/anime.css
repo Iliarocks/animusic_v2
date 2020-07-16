@@ -1,0 +1,81 @@
+html {
+  height: 100vh;
+  width: 100vw;
+  --main-text: #000000;
+  --secondary-text: #ffffff;
+  --main: #68d89b;
+  --main-hover: #46cc83;
+  --light-grey: #F0F0F0;
+  --medium-grey: #c3c0c0;
+  --main-background: white;
+  --error-red: #e83333;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 600px;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  color: var(--main-text);
+  font-family: 'Mukta Mahee', sans-serif;
+}
+header {
+  top: 0;
+  left: 0;
+  margin: 0;
+  width: 100vw;
+  height: 60px;
+  position: fixed;
+  min-width: 600px;
+  background: var(--main-background);
+}
+.navigator {
+  width: 80%;
+  margin: 0 auto;
+  max-width: 1400px;
+  height: 60px;
+  padding: 10px;
+}
+.navigator > div {
+  display: none;
+}
+header > div > h1 {
+  font-size: 27px;
+  line-height: 40px;
+  display: inline-block;
+  cursor: pointer;
+}
+h1 > span {
+  color: var(--main);
+}
+header > div > div {
+  float: right;
+  display: none;
+}
+header > div > i {
+  float: right;
+  display: inline-block;
+}
+.header-icon {
+  font-size: 30px;
+  cursor: pointer;
+  padding: 5px 13px;
+  transition: 140ms ease;
+  color: var(--medium-grey);
+}
+.header-icon:hover {
+  color: var(--main-hover);
+}
+#sign-out {
+  padding-left: 10px;
+  padding-right: 0;
+  font-size: 33px;
+  margin-top: -3px;
+}
