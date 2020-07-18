@@ -79,3 +79,89 @@ header > div > i {
   font-size: 33px;
   margin-top: -3px;
 }
+.anime-info {
+  width: 80vw;
+  height: 300px;
+  margin: 100px auto 50px;
+  max-width: 1400px;
+}
+.anime-info > div {
+  display: inline-block;
+  vertical-align: top;
+  height: 300px;
+}
+.song-holder {
+  width: 80vw;
+  height: auto;
+  margin: 100px auto 50px;
+  max-width: 1400px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 300px);
+  grid-template-rows: repeat(auto-fill, 380px);
+}
+#en-name {
+  font-size: 40px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 350px;
+}
+#cover-image {
+  width: 300px;
+  height: 300px;
+  background: #c8c8c8;
+  margin-right: 50px;
+  display: inline-block;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: center;
+}
+.info-icon {
+  color: white;
+  background: var(--main);
+  border-radius: 4px;
+  font-size: 18px;
+  padding: 15px;
+  margin-right: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.add-prompt {
+  height: 100vh;
+  width: 100vw;
+  background: rgba(87, 87, 87, 0.63);
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+}
+.add-prompt > form {
+  background: white;
+  width: 400px;
+  height: 300px;
+  margin: 25vh auto;
+  padding: 20px;
+}
+.add-prompt > form > p {
+  max-width: 360px;
+}
+#close-add {
+  float: right;
+}
+.error {
+  top: 30px;
+  width: 350px;
+  height: 150px;
+  right: -360px;
+  padding: 20px;
+  z-index: 1001;
+  position: fixed;
+  background: var(--main-background);
+  box-shadow: 0 0 10px rgba(66, 66, 66, 0.3);
+  border-right: 7px solid var(--error-red);
+}
+.error > h1 {
+  color: var(--error-red);
+  letter-spacing: 1.5px;
+  font-size: 25px;
+  line-height: 30px;
+}

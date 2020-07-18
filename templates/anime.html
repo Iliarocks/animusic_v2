@@ -13,12 +13,11 @@
   <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
 </head>
 
-<body>
+<body onload="loadInfo()">
   <header>
     <div class="navigator">
       <h1><span>ani</span>music</h1>
       <div class="signed-in-header">
-        <i id="user-settings" class="fas fa-user-cog header-icon"></i>
         <i id="sign-out" onclick="signOut()" class="fas fa-sign-out-alt header-icon"></i>
       </div>
       <div class="signed-out-header">
@@ -28,9 +27,35 @@
       <i class="fas fa-search header-icon"></i>
     </div>
   </header>
+  <div class="anime-info">
+    <div id="cover-image"></div>
+    <div>
+      <h1 id="en-name"></h1>
+      <h2 id="jap-name"></h2>
+      <i id="open-wiki" class="fab fa-wikipedia-w info-icon"></i>
+      <i id="open-add-song" class="fas fa-compact-disc info-icon"></i>
+    </div>
+  </div>
+  <div class="song-holder">
+
+  </div>
+  <div class="add-prompt">
+    <form>
+      <i id="close-add" class="fas fa-times"></i>
+      <h1>Add song with spotify</h1>
+      <p>Your spotify link should resemble this:<br><span style="font-size:13px;color:#68d89b;">https://open.spotify.com/track/4abjt5hWugcmJucydd6eHL?si=93-I_672RuyJdXk5yQPQuw</span></p>
+      <input id="spotify-input" type="text" placeholder="Spotify song link">
+      <button onclick="addSong()" id="add-song" type="button" name="button"><i class="fas fa-plus"></i></button>
+    </form>
+  </div>
+  <div class="error" style="transition: 180ms ease;">
+    <i style="float:right;cursor:pointer;" id="close-error" class="fas fa-times"></i>
+    <h1>Error:</h1>
+    <p>Hmm... Something seems to be missing</p>
+  </div>
   <script>
     // Your web app's Firebase configuration
-    var firebaseConfig = {
+    var firebaseCosnfig = {
       apiKey: "AIzaSyBblgZ4cy2FT0_Lydilueh3eeCl4IO7OPs",
       authDomain: "animusic-dev.firebaseapp.com",
       databaseURL: "https://animusic-dev.firebaseio.com",
@@ -41,6 +66,7 @@
     };
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
+      window.anime = '{{anime}}';
   </script>
   <script defer type="text/javascript" src="{{ url_for('static', filename='js/anime.js') }}"></script>
 </body>

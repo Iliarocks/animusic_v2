@@ -6,6 +6,7 @@ html {
   --main: #68d89b;
   --main-hover: #46cc83;
   --light-grey: #f0f0f0;
+  --error-red: #e83333;
 }
 * {
   margin: 0;
@@ -79,4 +80,22 @@ p > span {
   cursor: pointer;
   color: var(--main);
   text-decoration: underline;
+}
+.error {
+  top: 30px;
+  width: 350px;
+  height: 150px;
+  right: -360px;
+  padding: 20px;
+  z-index: 1001;
+  position: fixed;
+  background: var(--main-background);
+  box-shadow: 0 0 10px rgba(66, 66, 66, 0.3);
+  border-right: 7px solid var(--error-red);
+}
+.error > h1 {
+  color: var(--error-red);
+  letter-spacing: 1.5px;
+  font-size: 25px;
+  line-height: 30px;
 }

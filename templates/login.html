@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title>Animusic | {{ action }}</title>
+  <script src="https://kit.fontawesome.com/bc6a7ddc8b.js" crossorigin="anonymous"></script>
   <link href="https://fonts.googleapis.com/css2?family=Mukta+Mahee:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
   <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
@@ -17,12 +18,17 @@
   </header>
   <form>
     <h1>{{ title }}</h1>
-    <input id="name-input" type="text" placeholder="Full name">
+    <input id="name-input" type="text" placeholder="Username">
     <input id="email-input" type="text" placeholder="Email">
     <input id="password-input" type="password" placeholder="Password">
     <button id="action-btn" type="button" name="button">{{ action }}</button>
     <p>{{ question }}<span id="link">{{ link }}</span></p>
   </form>
+  <div class="error" style="transition: 180ms ease;">
+    <i style="float:right;cursor:pointer;" id="close-error" class="fas fa-times"></i>
+    <h1>Error:</h1>
+    <p>Hmm... Something seems to be missing</p>
+  </div>
   <script>
     // Your web app's Firebase configuration
     var firebaseConfig = {
@@ -40,7 +46,7 @@
     window.action = '{{ action }}';
     window.new_path = '{{ new_path }}'
   </script>
-  <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+  <script defer src="{{ url_for('static', filename='js/login.js') }}"></script>
 </body>
 
 </html>
