@@ -3,20 +3,24 @@ from flask import Flask, render_template
 app = Flask(__name__);
 
 @app.route('/')
-def index():
+def home():
     return render_template('index.html')
 
+@app.route('/account')
+def settings():
+    return render_template('account.html')
+
 @app.route('/sign-up')
-def get_started():
-    return render_template('login.html', new_path='/sign-in', action='Sign up', link='Sign in', question="Already have an account? ", title='Create account')
+def sign_up():
+    return render_template('login.html', action_opp='sign in', action='sign up', new_path='/sign-in')
 
 @app.route('/sign-in')
-def login():
-    return render_template('login.html', new_path='/sign-up', action='Sign in', link='Sign up', question="Don't have an account? ", title='Welcome back')
+def sign_in():
+    return render_template('login.html', action_opp='sign up', action='sign in', new_path='/sign-up')
 
-@app.route('/anime/<anime>')
-def anime(anime):
-    return render_template('anime.html', anime=anime)
+@app.route('/genre/<genre>')
+def genre(genre):
+    return 'This is the genre page for ' + genre
 
 if __name__ == '__main__':
     app.run(debug=True)

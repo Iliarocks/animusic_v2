@@ -1,78 +1,77 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Animusic</title>
-  <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.1/css/all.css"> -->
-  <script src="https://kit.fontawesome.com/bc6a7ddc8b.js" crossorigin="anonymous"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Mukta+Mahee:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-storage.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animusic</title>
+    <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js" integrity="sha384-3Nqiqht3ZZEO8FKj7GR1upiI385J92VwWNLj+FqHxtLYxd9l+WYpeqSOrLh0T12c" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-storage.js"></script>
 </head>
-
 <body onload="loadAnime()">
-  <header>
-    <div class="navigator">
-      <h1><span>ani</span>music</h1>
-      <div class="signed-in-header">
-        <i id="open-create" class="fas fa-plus-circle header-icon"></i>
-        <i id="sign-out" onclick="signOut()" class="fas fa-sign-out-alt header-icon"></i>
-      </div>
-      <div class="signed-out-header">
-        <i id="sign-up" class="fas fa-user-plus header-icon"></i>
-      </div>
-      <i id="patreon" class="fab fa-patreon header-icon"></i>
-      <i class="fas fa-search header-icon"></i>
-    </div>
-  </header>
-  <div class="banner"></div>
-  <div class="create-prompt">
-    <form>
-      <i style="float:right;cursor:pointer;" id="close-create" class="fas fa-times"></i>
-      <h1>Create Page</h1>
-      <p style="font-size:15px;margin-bottom:12px;">A place where you can share music<br>from your favorite anime</p>
-      <input id="en-name-input" type="text" placeholder="Anime name (eng)">
-      <input id="jap-name-input" type="text" placeholder="Anime name (jap)">
-      <input id="wiki-input" type="text" placeholder="Wikipedia">
-      <label for="cover-input"><i class="fas fa-file-image"></i></label>
-      <input style="display: none;" id="cover-input" type="file" accept="image/*">
-      <select id="genre-select">
-        <i style="color: white;font-size: 15px;" class="fas fa-sort-down"></i>
-        <option value="shonen">Shonen</option>
-        <option value="comedy">Comedy</option>
-        <option value="romance">Romance</option>
-        <option value="sports">Sports</option>
-        <option value="sci-fi">Sci-fi</option>
-        <option value="Isekai">Isekai</option>
-      </select>
-      <button onclick="create()" type="button" name="button"><i class="fas fa-check"></i></button>
-    </form>
-  </div>
-  <div class="error" style="transition: 180ms ease;">
-    <i style="float:right;cursor:pointer;" id="close-error" class="fas fa-times"></i>
-    <h1>Error:</h1>
-    <p>Hmm... Something seems to be missing</p>
-  </div>
-  <div style="width:80%;max-width: 1400px;margin:0 auto;height:auto;padding:40px 20px 0px;" class="body"></div>
-  <script>
-    // Your web app's Firebase configuration
-    var firebaseConfig = {
-      apiKey: "AIzaSyBblgZ4cy2FT0_Lydilueh3eeCl4IO7OPs",
-      authDomain: "animusic-dev.firebaseapp.com",
-      databaseURL: "https://animusic-dev.firebaseio.com",
-      projectId: "animusic-dev",
-      storageBucket: "animusic-dev.appspot.com",
-      messagingSenderId: "1064983100624",
-      appId: "1:1064983100624:web:8b4600c34bdc54faac32d5"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-  </script>
-  <script defer type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <nav class="navbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <div class="nav-link">
+                    <i class="fas fa-search"></i>
+                    <input onkeyup="search(event.target.value)" type="text" class="link-input" placeholder="Search">
+                    <div class="search-results"></div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link signed-in open-add" onclick="openPopup();" href="#">
+                    <i class="fas fa-plus-circle"></i>
+                    <span class="link-text">Add anime</span>
+                </a>
+            </li>
+            <li style="display: none;" class="nav-item signed-in">
+                <a class="nav-link" href="http://localhost:5000/account">
+                    <i class="fas fa-cog"></i>
+                    <span class="link-text">Settings</span>
+                </a>
+            </li>
+            <li style="display: none;" class="nav-item signed-out">
+                <a class="nav-link" href="http://localhost:5000/sign-up">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span class="link-text">Sign up</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <main>
+        <div style="display:none;" class="popup">
+            <form class="popup-content">
+                <button type="reset" onclick="closePopup()"><i class="fas fa-times"></i></button>
+                <h1>Add anime</h1>
+                <input id="en-input" type="text" class="popup-input" placeholder="Anime name (en)">
+                <input id="jap-input" type="text" class="popup-input" placeholder="Anime name (jap)">
+                <select id="genre-select">
+                    <option selected disabled>Genre</option>
+                    <option value="shonen">Shonen</option>
+                    <option value="isekai">Isekai</option>
+                </select>
+                <button onclick="clickInput()" type="button" id="file-button" class="popup-button"><i class="fas fa-file-image"></i></button>
+                <input id="cover-input" type="file" accept="image/*" hidden>
+                <button onclick="addSong()" class="popup-button" id="finish-button" type="button"><i class="fas fa-check"></i></button>
+            </form>
+        </div>
+    </main>
+    <script type="text/javascript">
+        //firebase config
+        var config = {
+            apiKey: "AIzaSyC14XiFk8naG0gkW-ev7YRbxU0FLY8k_yI",
+            authDomain: "animusic-da89e.firebaseapp.com",
+            databaseURL: "https://animusic-da89e.firebaseio.com",
+            projectId: "animusic-da89e",
+            storageBucket: "animusic-da89e.appspot.com",
+            messagingSenderId: "363034068126",
+            appId: "1:363034068126:web:c73a87ff751c2292a1a78f",
+            measurementId: "G-457KQF3VP7"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script defer type="text/javascript" src="{{ url_for('static', filename='index.js') }}"></script>
 </body>
-
 </html>
