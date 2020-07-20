@@ -37,7 +37,7 @@ async function loadGenre(anime, genre) {
         return html + 
         `<div id="${anime.en_name}">
             <p>${anime.en_name} | ${anime.jap_name} | ${anime.genre} | ${anime.likes}</p>
-            <img style="opacity:0;transition:250ms;" onload="fadeIn(this)" src="${anime.cover_src}">
+            <img style="opacity:0;transition:600ms;" onload="fadeIn(this)" src="${anime.cover_src}">
         </div>`
     }, '')
     document.querySelector('main').innerHTML += `<a href="http://localhost:5000/genre/${genre}">${genre}</a><div class="${genre}">${genreHTML}</div>`;
@@ -72,10 +72,6 @@ async function addSong() {
     })
     closePopup()
     imageEvent()
-};
-
-function signOut() {
-    auth.signOut()
 };
 
 function openPopup() {

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animusic | Settings</title>
+    <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js" integrity="sha384-3Nqiqht3ZZEO8FKj7GR1upiI385J92VwWNLj+FqHxtLYxd9l+WYpeqSOrLh0T12c" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-storage.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <ul class="navbar-nav">
+            <li id="profile-pic-item" class="nav-item">
+                <a onclick="clickInput()">
+                    <i class="fas fa-user-circle"></i>
+                    <input type="file" id="profile-pic-input" hidden>
+                </a>
+            </li>
+            <li class="nav-item">
+               <a onclick="signOut()">
+                    <span class="item-text">Sign out</span>
+                    <i class="fas fa-sign-out-alt"></i>
+               </a>
+            </li>
+            <li class="nav-item">
+                <a href="http://localhost:5000/">
+                    <span class="item-text">Go home</span>
+                    <i class="fas fa-home"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <main>
+        <h1>Change Email</h1>
+        <input id="curr-pass1" type="password" class="setting-input" placeholder="Current password">
+        <input id="new-email" type="email" class="setting-input" placeholder="New email">
+        <button onclick="reAuth('email')" id="change-email" type="button" class="setting-button">Change Email</button>
+
+        <h1>Change Password</h1>
+        <input id="curr-pass2" type="password" class="setting-input" placeholder="Current password">
+        <input id="new-pass1" type="password" class="setting-input" placeholder="New password">
+        <input id="new-pass2" type="password" class="setting-input" placeholder="Retype new password">
+        <button onclick="reAuth('pass')" id="change-password" type="button" class="setting-button">Change Password</button>
+    </main>
+    <script type="text/javascript">
+        //firebase config
+        var config = {
+            apiKey: "AIzaSyC14XiFk8naG0gkW-ev7YRbxU0FLY8k_yI",
+            authDomain: "animusic-da89e.firebaseapp.com",
+            databaseURL: "https://animusic-da89e.firebaseio.com",
+            projectId: "animusic-da89e",
+            storageBucket: "animusic-da89e.appspot.com",
+            messagingSenderId: "363034068126",
+            appId: "1:363034068126:web:c73a87ff751c2292a1a78f",
+            measurementId: "G-457KQF3VP7"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script defer type="text/javascript" src="{{ url_for('static', filename='account.js') }}"></script>
+</body>
+</html>

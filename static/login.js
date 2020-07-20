@@ -1,4 +1,5 @@
 const auth = firebase.auth();
+let user;
 
 window.onload = () => {
     if (window.action === 'sign in') {
@@ -6,13 +7,20 @@ window.onload = () => {
     }
 }
 
-auth.onAuthStateChanged(user => {
-    if (user) {
+auth.onAuthStateChanged(currUser => {
+    if (currUser) {
+        user = currUser;
         console.log('logged in')
     } else {
         console.log('logged out')
     }
 })
+
+function sendVerification() {
+    user.sendEmailVerification()
+        .then(() => alert('We have sent a verification email to your inbox'))
+        .catch(err => alert(err.message));
+}
 
 function login() {
     const name = document.querySelector('#name-input').value.split(' ').join('_');
@@ -20,7 +28,10 @@ function login() {
     const pass = document.querySelector('#password-input').value;
     if (window.action === 'sign up') {
         auth.createUserWithEmailAndPassword(email, pass)
-            .then(result => result.user.updateProfile({ displayName: name }))
+            .then(result => {
+                result.user.updateProfile({ displayName: name });
+                sendVerification()
+            })
             .catch(err => console.log(err.message))
     } else if (window.action === 'sign in') {
         auth.signInWithEmailAndPassword(email, pass)
