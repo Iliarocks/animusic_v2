@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <title>Animusic | Settings</title>
-    <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js" integrity="sha384-3Nqiqht3ZZEO8FKj7GR1upiI385J92VwWNLj+FqHxtLYxd9l+WYpeqSOrLh0T12c" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/1984d39098.js" crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-storage.js"></script>
@@ -12,27 +13,38 @@
 <body>
     <nav class="navbar">
         <ul class="navbar-nav">
+          <li class="logo">
+              <a href="/" class="nav-link">
+                  <span class="link-text"><span style="color:#80ff7e;">Ani</span>music</span>
+                  <i class="fad fa-angle-double-right"></i>
+              </a>
+          </li>
             <li id="profile-pic-item" class="nav-item">
-                <a onclick="clickInput()">
-                    <i class="fas fa-user-circle"></i>
-                    <input type="file" id="profile-pic-input" hidden>
+                <a class="nav-link" onclick="clickInput()">
+                    <i class="fad fa-user-circle"></i>
+                    <span class="link-text">Username</span>
+                    <input accept="image/x-png, image/jpeg" ocnchange="changeProfilePic()" type="file" id="profile-pic-input" hidden>
                 </a>
             </li>
             <li class="nav-item">
-               <a onclick="signOut()">
-                    <span class="item-text">Sign out</span>
-                    <i class="fas fa-sign-out-alt"></i>
-               </a>
-            </li>
-            <li class="nav-item">
-                <a href="http://localhost:5000/">
-                    <span class="item-text">Go home</span>
-                    <i class="fas fa-home"></i>
+                <a class="nav-link" href="/">
+                    <i class="fad fa-home-lg-alt"></i>
+                    <span class="link-text">Home</span>
                 </a>
             </li>
+            <li class="nav-link" class="nav-item">
+                <a onclick="signOut()">
+                    <i class="fad fa-sign-out-alt"></i>
+                    <span class="link-text">Logout</span>
+                </a>
+             </li>
         </ul>
     </nav>
     <main>
+        <h1>Change Name</h1>
+        <input id="new-name" type="text" class="setting-input" placeholder="New name">
+        <button onclick="changeName()" id="change-name" type="button" class="setting-button">Change Name</button>
+
         <h1>Change Email</h1>
         <input id="curr-pass1" type="password" class="setting-input" placeholder="Current password">
         <input id="new-email" type="email" class="setting-input" placeholder="New email">

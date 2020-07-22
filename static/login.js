@@ -10,9 +10,7 @@ window.onload = () => {
 auth.onAuthStateChanged(currUser => {
     if (currUser) {
         user = currUser;
-        console.log('logged in')
-    } else {
-        console.log('logged out')
+        window.location = window.origin;
     }
 })
 
@@ -32,9 +30,9 @@ function login() {
                 result.user.updateProfile({ displayName: name });
                 sendVerification()
             })
-            .catch(err => console.log(err.message))
+            .catch(err => alert(err.message))
     } else if (window.action === 'sign in') {
         auth.signInWithEmailAndPassword(email, pass)
-            .catch(err => console.log(err.message))
+            .catch(err => alert(err.message))
     }
 }

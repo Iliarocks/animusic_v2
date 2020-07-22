@@ -4,20 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Animusic | {{ action }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
 </head>
 <body>
-    <div class="body">
-        <h1>{{ action }}</h1>
+    <main>
         <form class="login-form">
+            <h1>{{ action }}</h1>
             <input id="name-input" class="info-input" type="text" placeholder="Name">
-            <input id="email-input" class="info-input" type="text" placeholder="Email">
-            <input id="password-input" class="info-input" type="text" placeholder="Password">
+            <input id="email-input" class="info-input" type="email" placeholder="Email">
+            <input id="password-input" class="info-input" type="password" placeholder="Password">
             <button type="button" onclick="login()">{{ action }}</button>
+            <a href="{{new_path}}">{{action_opp}}</a>
         </form>
-        <a href="http://localhost:5000{{new_path}}">{{action_opp}}</a>
-    </div>
+    </main>
     <script type="text/javascript">
         //firebase config
         var config = {

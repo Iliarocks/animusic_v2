@@ -1,20 +1,26 @@
 const auth = firebase.auth();
 const database = firebase.database();
 const storage = firebase.storage();
-var username, uid, email;
+var username, uid, email, photoURL;
 
 auth.onAuthStateChanged(user => {
     if (user) {
         username = user.displayName;
         uid = user.uid;
         email = user.email;
-        document.querySelector('.signed-out').style.display = 'none';
-        document.querySelectorAll('.signed-in').forEach(element => element.style.display = 'list-item');
+        photoURL = user.photoURL;
     } else {
-        document.querySelector('.signed-out').style.display = 'block';
-        document.querySelectorAll('.signed-in').forEach(element => element.style.display = 'none');
+      switchNav()
     }
 });
+
+function switchNav() {
+  document.querySelector('#account-item').innerHTML = `
+  <a class="nav-link" href="/sign-up">
+    <i class="fad fa-sign-in-alt"></i>
+    <span class="link-text">Sign up</span>
+  </a>`
+}
 
 //search anime on keypress
 function search(query) {
@@ -33,14 +39,26 @@ function search(query) {
 
 async function loadGenre(anime, genre) {
     var genreArr = await genre === 'popular' ? anime.slice(0, 6):anime.filter(anime => anime.genre === genre).slice(0, 6);
-    var genreHTML = genreArr.reduce((html, anime) => {
-        return html + 
-        `<div id="${anime.en_name}">
-            <p>${anime.en_name} | ${anime.jap_name} | ${anime.genre} | ${anime.likes}</p>
-            <img style="opacity:0;transition:600ms;" onload="fadeIn(this)" src="${anime.cover_src}">
-        </div>`
+    var genreHTML = await genreArr.reduce((html, anime) => {
+        return html +
+        `<li class="anime-item">
+          <a class="anime-link" href="/anime/${anime.en_name.split(' ').join('-')}">
+            <h1 class="anime-en">${anime.en_name}</h1>
+            <h2 class="anime-jap">${anime.jap_name}</h2>
+            <i class="fad fa-heart-circle"></i>
+            <span class="anime-likes">${anime.likes}</span>
+            <img class="anime-image" src="${anime.cover_src}">
+          </a>
+        </li>`
     }, '')
-    document.querySelector('main').innerHTML += `<a href="http://localhost:5000/genre/${genre}">${genre}</a><div class="${genre}">${genreHTML}</div>`;
+    document.querySelector('main').innerHTML += `
+    <a class="genre-link" href="/genre/${genre}">${genre}</a>
+    <div class="genre-holder">
+      <ul class="anime-list">
+        ${genreHTML}
+      </ul>
+    </div>
+    `
 };
 
 function loadAnime() {
@@ -60,6 +78,10 @@ async function addSong() {
     var jap = document.querySelector('#jap-input').value.toLowerCase();
     var cover = document.querySelector('#cover-input').files[0];
     var genre = document.querySelector('#genre-select').value;
+    if (en === '' || jap === '' || cover === undefined || genre === '') {
+        alert('Hmm... Somethings missing.')
+        return;
+    }
     var storageRef = `covers/${cover.name}`;
     var task = await storage.ref(storageRef).put(cover);
     var coverSrc = await getImgURL(storageRef);
@@ -75,7 +97,11 @@ async function addSong() {
 };
 
 function openPopup() {
-    document.querySelector('.popup').style.display = 'flex';
+    if (auth.currentUser === null) {
+      alert('Sign in to add anime');
+      return;
+    }
+    document.querySelector('.popup').style.display = 'grid';
 };
 
 function closePopup() {
