@@ -26,11 +26,10 @@ function switchNav() {
 function search(query) {
     database.ref('/anime').once('value', function(snap) {
         var animes = Object.keys(snap.val());
-        var queryLetters = query.split('-');
         var searchHTML = '';
         animes.forEach((anime, i) => {
-            if (i >= queryLetters.length) return;
-            if (anime.includes(queryLetters[i])) searchHTML += anime;
+            if (i >= query.length) return;
+            if (anime.includes(query[i])) searchHTML += anime;
             if (query === '') searchHTML = '';
         })
         document.querySelector('.search-results').innerHTML = searchHTML;
@@ -73,7 +72,7 @@ function getImgURL(ref) {
    return storage.ref(ref).getDownloadURL().then(url => url);
 };
 
-async function addSong() {
+async function addAnime() {
     var en = document.querySelector('#en-input').value.toLowerCase();
     var jap = document.querySelector('#jap-input').value.toLowerCase();
     var cover = document.querySelector('#cover-input').files[0];
@@ -85,7 +84,7 @@ async function addSong() {
     var storageRef = `covers/${cover.name}`;
     var task = await storage.ref(storageRef).put(cover);
     var coverSrc = await getImgURL(storageRef);
-    database.ref(`/anime/${en}`).set({
+    database.ref(`/anime/${en.split(' ').join('-')}`).set({
         en_name: en,
         jap_name: jap,
         cover_src: coverSrc,

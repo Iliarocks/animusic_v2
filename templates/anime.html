@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Animusic | {{ anime }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/1984d39098.js" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-database.js"></script>
+  </head>
+  <body onload="loadAnime()">
+    <nav class="navbar">
+      <ul class="navbar-nav">
+        <li class="logo">
+            <a href="/" class="nav-link">
+                <span class="link-text"><span style="color:#80ff7e;">Ani</span>music</span>
+                <i class="fad fa-angle-double-right"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link">
+                <i class="fad fa-search"></i>
+                <span class="link-text">
+                    <input onkeyup="search(event.target.value)" type="text" class="link-input" placeholder="Search">
+                    <div class="search-results"></div>
+                </span>
+            </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/">
+            <i class="fad fa-bookmark"></i>
+            <span class="link-text">Favorites</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/account">
+            <i class="fad fa-cog"></i>
+            <span class="link-text">Settings</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <main>
+      <div class="popup">
+        <form class="popup-content">
+          <i onclick="closePopup()" class="far fa-times"></i>
+          <h1>Add song</h1>
+          <input id="spotify-input" type="text" placeholder="Spotify song link">
+          <button onclick="addSong()" type="button" name="button"><i class="fad fa-check"></i></button>
+        </form>
+      </div>
+      <div class="anime-info"></div>
+      <div class="anime-songs">
+        <ul class="anime-song-list"></ul>
+      </div>
+    </main>
+    <script type="text/javascript">
+        //firebase config
+        var config = {
+            apiKey: "AIzaSyC14XiFk8naG0gkW-ev7YRbxU0FLY8k_yI",
+            authDomain: "animusic-da89e.firebaseapp.com",
+            databaseURL: "https://animusic-da89e.firebaseio.com",
+            projectId: "animusic-da89e",
+            storageBucket: "animusic-da89e.appspot.com",
+            messagingSenderId: "363034068126",
+            appId: "1:363034068126:web:c73a87ff751c2292a1a78f",
+            measurementId: "G-457KQF3VP7"
+        };
+        firebase.initializeApp(config);
+        window.anime = '{{ anime }}'
+    </script>
+    <script defer type="text/javascript" src="{{ url_for('static', filename='anime.js') }}"></script>
+  </body>
+</html>

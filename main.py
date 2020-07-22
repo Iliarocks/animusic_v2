@@ -20,7 +20,11 @@ def sign_in():
 
 @app.route('/genre/<genre>')
 def genre(genre):
-    return 'This is the genre page for ' + genre
+    return 'Sorry! This path is still in the works. Try again later.'
+
+@app.route('/anime/<anime>')
+def anime(anime):
+    return render_template('anime.html', anime=anime)
 
 if __name__ == '__main__':
     app.run(debug=True)
