@@ -22,7 +22,7 @@
             <a class="nav-link">
                 <i class="fad fa-search"></i>
                 <span class="link-text">
-                    <input type="text" class="link-input" placeholder="Search">
+                    <input id="search" type="text" class="link-input" placeholder="Search">
                     <div class="search-results"></div>
                 </span>
             </a>
@@ -33,7 +33,7 @@
             <span class="link-text">Favorites</span>
           </a>
         </li>
-        <li class="nav-item">
+        <li id="account-item" class="nav-item">
           <a href="/account">
             <i class="fad fa-cog"></i>
             <span class="link-text">Settings</span>
@@ -50,7 +50,13 @@
           <button onclick="addSong()" type="button" name="button"><i class="fad fa-check"></i></button>
         </form>
       </div>
-      <div class="anime-info"></div>
+      <div class="anime-info">
+        <img id="anime-cover" src="" alt="">
+        <h1 id="anime-en"></h1>
+        <h2 id="anime-jap"></h2>
+        <p id="anime-likes"></p>
+        <button class="signed-in" type="button" onclick="openPopup()"><i class="fad fa-plus-circle"></i></button>
+      </div>
       <div class="anime-songs">
         <ul class="anime-song-list"></ul>
       </div>

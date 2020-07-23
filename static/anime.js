@@ -1,19 +1,47 @@
 const database = firebase.database();
 const auth = firebase.auth();
-var anime;
+var anime, animeNamesw
+
+auth.onAuthStateChanged(user => {
+  if (user) {
+    document.querySelectorAll('.signed-in').forEach(element => element.style.display = 'block');
+  } else {
+    switchNav()
+    document.querySelectorAll('.signed-in').forEach(element => element.style.display = 'none'); 
+  }
+})
+
+function switchNav() {
+  document.querySelector('#account-item').innerHTML = `
+  <a class="nav-link" href="/sign-up">
+    <i class="fad fa-sign-in-alt"></i>
+    <span class="link-text">Sign up</span>
+  </a>`
+}
+
+database.ref(`/anime/${anime}/likes`).on('value', snap => {
+  document.querySelector('#anime-likes').innerText = snap.val();
+})
+
+function likeEvent() {
+  document.querySelector('#anime-likes').addEventListener('click', function() {
+    database.ref(`/anime/${anime}/likes`).once('value', snap => {
+      var currLikes = snap.val();
+      database.ref(`/anime/${anime}`).update({ likes:currLikes + 1 })
+    })
+  })
+}
 
 function loadAnime() {
   anime = window.anime;
   database.ref(`/anime/${anime}`).once('value', function(snap) {
     if (snap.val() === null) return;
-    document.querySelector('.anime-info').innerHTML =
-      `<img id="anime-cover" src="${snap.val().cover_src}" alt="">
-      <h1 id="anime-en">${snap.val().en_name}</h1>
-      <h2 id="anime-jap">${snap.val().jap_name}</h2>
-      <p id="anime-likes">${snap.val().likes}</p>
-      <button type="button" onclick="openPopup()"><i class="fad fa-plus-circle"></i></button>`
-      if (snap.val().songs === undefined) return;
-      loadSongs(Object.values(snap.val().songs))
+    document.querySelector('#anime-en').innerText = snap.val().en_name;
+    document.querySelector('#anime-jap').innerText = snap.val().jap_name;
+    document.querySelector('#anime-cover').src = snap.val().cover_src;
+    likeEvent();
+    if (snap.val().songs === undefined) return;
+    loadSongs(Object.values(snap.val().songs));
   })
 }
 
