@@ -17,8 +17,8 @@ function loadAnime() {
   })
 }
 
-function search(query) {
-  const results = animeNames.filter(name => {
+function search(names, query) {
+  const results = names.filter(name => {
     return (name.indexOf(query) > -1 || query.indexOf(name) > -1);
   })
   const resultsHTML = results.reduce((html, result) => {
@@ -45,14 +45,19 @@ function addSong() {
 }
 
 document.querySelector('#search').addEventListener('keyup', async function(event) {
+  window.clearTimeout();
   const query = event.target.value.toLowerCase();
   if (!animeNames) {
     animeNames = await database.ref('/anime').once('value').then(snap => {
       return Object.values(snap.val()).map(anime => anime.en_name.toLowerCase());
     })
-    search(query)
+    window.setTimeout(() => {
+      search(animeNames, query)
+    }, 10000)
   } else {
-    search(query)
+    window.setTimeout(() => {
+      search(animeNames, query)
+    }, 10000)
   }
 })
 
