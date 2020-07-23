@@ -17,19 +17,15 @@ function loadAnime() {
   })
 }
 
-//search anime on keypress
 function search(query) {
-    database.ref('/anime').once('value', function(snap) {
-        var animes = Object.keys(snap.val());
-        var searchHTML = '';
-        animes.forEach((anime, i) => {
-            if (i >= query.length) return;
-            if (anime.includes(query[i])) searchHTML += anime;
-            if (query === '') searchHTML = '';
-        })
-        document.querySelector('.search-results').innerHTML = searchHTML;
-    })
-};
+  const results = animeNames.filter(name => {
+    return (name.indexOf(query) > -1 || query.indexOf(name) > -1);
+  })
+  const resultsHTML = results.reduce((html, result) => {
+    return html + `<p>${result}</p>`;
+  }, '');
+  document.querySelector('.search-results').innerHTML = query === ''?'':resultsHTML;
+}
 
 function loadSongs(songs) {
   var songsHTML = songs.reduce((html, song) => {
@@ -47,6 +43,18 @@ function addSong() {
   const embededURL = `https://open.spotify.com/embed/track/${spotifyURL.split('/')[spotifyURL.split('/').length - 1].split('?')[0]}`;
   database.ref(`/anime/${anime}/songs`).push({embeded: `<iframe style="opacity:0;transition:600ms;" onload="fadeIn(event.target)" src="${embededURL}" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`})
 }
+
+document.querySelector('#search').addEventListener('keyup', async function(event) {
+  const query = event.target.value.toLowerCase();
+  if (!animeNames) {
+    animeNames = await database.ref('/anime').once('value').then(snap => {
+      return Object.values(snap.val()).map(anime => anime.en_name.toLowerCase());
+    })
+    search(query)
+  } else {
+    search(query)
+  }
+})
 
 function fadeIn(element) {
   element.style.opacity = 1;

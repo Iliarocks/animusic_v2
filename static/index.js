@@ -1,7 +1,7 @@
 const auth = firebase.auth();
 const database = firebase.database();
 const storage = firebase.storage();
-var username, uid, email, photoURL;
+var username, uid, email, photoURL, animeNames;
 
 auth.onAuthStateChanged(user => {
     if (user) {
@@ -14,6 +14,16 @@ auth.onAuthStateChanged(user => {
     }
 });
 
+function search(query) {
+  const results = animeNames.filter(name => {
+    return (name.indexOf(query) > -1 || query.indexOf(name) > -1);
+  })
+  const resultsHTML = results.reduce((html, result) => {
+    return html + `<p>${result}</p>`;
+  }, '');
+  document.querySelector('.search-results').innerHTML = query === ''?'':resultsHTML;
+}
+
 function switchNav() {
   document.querySelector('#account-item').innerHTML = `
   <a class="nav-link" href="/sign-up">
@@ -21,20 +31,6 @@ function switchNav() {
     <span class="link-text">Sign up</span>
   </a>`
 }
-
-//search anime on keypress
-function search(query) {
-    database.ref('/anime').once('value', function(snap) {
-        var animes = Object.keys(snap.val());
-        var searchHTML = '';
-        animes.forEach((anime, i) => {
-            if (i >= query.length) return;
-            if (anime.includes(query[i])) searchHTML += anime;
-            if (query === '') searchHTML = '';
-        })
-        document.querySelector('.search-results').innerHTML = searchHTML;
-    })
-};
 
 async function loadGenre(anime, genre) {
     var genreArr = await genre === 'popular' ? anime.slice(0, 6):anime.filter(anime => anime.genre === genre).slice(0, 6);
@@ -102,6 +98,18 @@ function openPopup() {
     }
     document.querySelector('.popup').style.display = 'grid';
 };
+
+document.querySelector('#search').addEventListener('keyup', async function(event) {
+  const query = event.target.value.toLowerCase();
+  if (!animeNames) {
+    animeNames = await database.ref('/anime').once('value').then(snap => {
+      return Object.values(snap.val()).map(anime => anime.en_name.toLowerCase());
+    })
+    search(query)
+  } else {
+    search(query)
+  }
+})
 
 function closePopup() {
     document.querySelector('.popup').style.display = 'none';
