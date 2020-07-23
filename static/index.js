@@ -106,13 +106,9 @@ document.querySelector('#search').addEventListener('keyup', async function(event
     animeNames = await database.ref('/anime').once('value').then(snap => {
       return Object.values(snap.val()).map(anime => anime.en_name.toLowerCase());
     })
-    window.setTimeout(() => {
-      search(animeNames, query)
-    }, 400)
+    window.setTimeout(() => search(animeNames, query), 400)
   } else {
-    window.setTimeout(() => {
-      search(animeNames, query)
-    }, 400)
+    window.setTimeout(() => search(animeNames, query), 400)
   }
 })
 
