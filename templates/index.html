@@ -17,15 +17,15 @@
         <ul class="navbar-nav">
             <li class="logo">
                 <a href="/" class="nav-link">
-                    <span class="link-text"><span style="color:#80ff7e;">Ani</span>music</span>
+                    <span class="link-text">Animusic</span>
                     <i class="fad fa-angle-double-right"></i>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item nav-search">
                 <a class="nav-link">
                     <i class="fad fa-search"></i>
                     <span class="link-text search-span">
-                        <input id="search" type="text" class="link-input" placeholder="Search">
+                        <input id="search" type="text" class="link-input search" placeholder="Search">
                         <div class="search-results"></div>
                     </span>
                 </a>
@@ -50,23 +50,23 @@
             </li>
         </ul>
     </nav>
+    <div class="popup">
+        <form class="popup-content">
+            <button id="close-popup" type="reset" onclick="closePopup()"><i class="fas fa-times"></i></button>
+            <h1>Add anime</h1>
+            <input id="en-input" type="text" class="popup-input" placeholder="Anime name (en)">
+            <input id="jap-input" type="text" class="popup-input" placeholder="Anime name (jap)">
+            <select id="genre-select">
+                <option selected disabled>Genre</option>
+                <option value="shonen">Shonen</option>
+                <option value="isekai">Isekai</option>
+            </select>
+            <button onclick="clickInput()" type="button" id="file-button" class="popup-button"><i class="fad fa-file-image"></i></button>
+            <input id="cover-input" type="file" accept="image/*" hidden>
+            <button onclick="addAnime()" class="popup-button" type="button"><i class="fad fa-check-circle"></i></button>
+        </form>
+    </div>
     <main>
-        <div class="popup">
-            <form class="popup-content">
-                <button type="reset" onclick="closePopup()"><i class="fas fa-times"></i></button>
-                <h1>Add anime</h1>
-                <input id="en-input" type="text" class="popup-input" placeholder="Anime name (en)">
-                <input id="jap-input" type="text" class="popup-input" placeholder="Anime name (jap)">
-                <select id="genre-select">
-                    <option selected disabled>Genre</option>
-                    <option value="shonen">Shonen</option>
-                    <option value="isekai">Isekai</option>
-                </select>
-                <button onclick="clickInput()" type="button" id="file-button" class="popup-button"><i class="fad fa-file-image"></i></button>
-                <input id="cover-input" type="file" accept="image/*" hidden>
-                <button onclick="addAnime()" class="popup-button" type="button"><i class="fad fa-check-circle"></i></button>
-            </form>
-        </div>
     </main>
     <script type="text/javascript">
         //firebase config

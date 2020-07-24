@@ -1,0 +1,388 @@
+:root {
+    font-size: 17px;
+    font-family: 'Open sans';
+    --transition-speed: 600ms;
+    --blue1: #020330;
+    --blue2: #010247;
+    --blue3: #03045E;
+    --blue4: #0077B6;
+    --blue5: #00B4D8;
+    --blue6: #90E0EF;
+    --blue7: #CAF0F8;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    color: black;
+    background-color: white;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+main {
+    margin-left: 5rem;
+    padding: 1.5rem 5%;
+}
+
+.navbar {
+    position: fixed;
+    background-color: var(--blue1);
+    transition: 200ms ease;
+    z-index: 10;
+}
+
+.navbar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.nav-item {
+    width: 100%;
+}
+
+.nav-item:last-child {
+    margin-top: auto;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    height: 5rem;
+    color: var(--blue6);
+    text-decoration: none;
+    cursor: pointer;
+    filter: grayscale(80%) opacity(0.8);
+    transition: var(--transition-speed);
+}
+
+.nav-link:hover {
+    filter: grayscale(0%) opacity(1);
+    background: var(--blue2);
+}
+
+.link-text {
+    display: none;
+    margin-left: 1rem;
+}
+
+.nav-link i {
+    font-size: 2rem;
+    margin: 0 1.5rem;
+}
+
+.nav-link i {
+    color: var(--blue6);
+    transition: var(--transition-speed);
+}
+
+.logo {
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: var(--blue7);
+    background: var(--blue2);
+    font-size: 1.5rem;
+    letter-spacing: 0.3ch;
+    width: 100%;
+}
+
+.logo i {
+    transform: rotate(0deg);
+    transition: transform var(--transition-speed);
+}
+
+.navbar:hover .logo i {
+    transform: rotate(-180deg);
+}
+
+.search {
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    color: var(--blue6);
+    width: 9rem;
+    padding: 0.5rem 0;
+}
+
+.search-span {
+    position: relative;
+    z-index: 1000;
+}
+
+.search-results {
+    position: absolute;
+    background: white;
+    width: 9rem;
+    z-index: 1000;
+}
+
+.search-list {
+    background: white;
+    padding: 0.5rem 0.5rem 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-item {
+    padding-bottom: 0.5rem;
+    margin-bottom: 1px solid #d9d9d9;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.search-item a {
+    color: black;
+}
+
+.popup {
+    display: none;
+    place-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+}
+
+.popup-content {
+    background: white;
+    padding: 1.5rem;
+}
+
+.popup-input {
+    border: none;
+    outline: none;
+    padding: 0.9rem 0;
+    background: white;
+    border-bottom: 2px solid var(--blue7);
+    font-weight: 600;
+}
+
+.popup-button {
+    border: none;
+    outline: none;
+    color: var(--blue6);
+    background: var(--blue2);
+    padding: 0.8rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+#genre-select {
+    border: none;
+    outline: none;
+    color: var(--blue6);
+    background: var(--blue2);
+    padding: 0.8rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+#close-popup {
+    background: white;
+    border: none;
+    outline: none;
+    float: right;
+    cursor: pointer;
+}
+
+.genre-link {
+    color: var(--blue3);
+    font-weight: bold;
+    font-size: 1.7rem;
+    text-decoration: none;
+}
+
+.genre-list {
+    list-style: none;
+    display: flex;
+    height: 10rem;
+    margin: 1rem 0;
+    overflow: scroll;
+}
+
+.anime-item {
+    height: 100%;
+    min-width: 16.5rem;
+    background-size: cover;
+    padding: 1rem;
+    margin-right: 1rem;
+}
+
+.anime-link {
+    text-decoration: none;
+}
+
+.anime-text {
+    color: black;
+    width: fit-content;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 1.3rem;
+    padding: 0.3rem;
+    max-width: 14.5rem;
+    background: white;
+}
+
+.anime-text i {
+    margin-right: 0.5rem;
+    color: var(--blue4);
+}
+
+/* small screens */
+@media only screen and (max-width: 599px) {
+    .navbar {
+        bottom: 0;
+        width: 100vw;
+        height: 5rem;
+    }
+
+    .logo {
+        display: none;
+    }
+
+    .navbar-nav {
+        flex-direction: row;
+    }
+    
+    .nav-link {
+        justify-content: center;
+    }
+
+    main {
+        margin: 0;
+        margin-bottom: 5rem;
+    }
+
+    .nav-search {
+        display: none;
+    }
+
+    .popup {
+        height: 100vh;
+        width: 100vw;
+        padding-bottom: 5rem;
+    }
+
+    .popup-content {
+        height: 20rem;
+        width: 90%;
+    }
+
+    .popup-content h1 {
+        margin-bottom: 1.5rem;
+    }
+
+    .popup-input {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        width: 85%;
+    }
+
+    .popup-button {
+        font-size: 1.5rem;
+        height: 3.5rem;
+        width: 3.5rem;
+        margin: 0 0.3rem;
+    }
+
+    #genre-select {
+        font-size: 1rem;
+        height: 3.6rem;
+        width: 7rem;
+        margin: 0 0.3rem 0 0;
+    }
+
+    #close-popup {
+        font-size: 1.2rem;
+    }
+
+    #jap-input {
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* large screens */
+@media only screen and (min-width: 599px) {
+    .navbar {
+        top: 0;
+        width: 5rem;
+        height: 100vh;
+        overflow-y: scroll;
+    }
+
+    .navbar:hover {
+        width: 16rem;
+    }
+
+    .navbar:hover .link-text {
+        display: block;
+    }
+
+    .popup {
+        height: 100vh;
+        width: 100vw;
+        padding-left: 5rem;
+    }
+    
+    .popup-content {
+        position: relative;
+        width: 21rem;
+        height: 20rem;
+    }
+
+    .popup-content h1 {
+        margin-bottom: 1rem;
+    }
+
+    .popup-button {
+        height: 3.5rem;
+        width: 3.5rem;
+        font-size: 1.5rem;
+        transition: 200ms ease;
+        margin: 0 0.5rem;
+    }
+
+    .popup-button:hover {
+        background: var(--blue3);
+    }
+
+    .popup-input {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        width: 16.5rem;
+    }
+
+    #genre-select {
+        margin-top: -20px;
+        font-size: 1rem;
+        height: 3.5rem;
+        width: 7rem;
+        margin: 0 0.5rem 0 0;
+    }
+
+    #genre-select:hover {
+        background: var(--blue3);
+    }
+
+    #jap-input {
+        margin-bottom: 1.5rem;
+    }
+
+    #close-popup {
+        font-size: 1rem;
+    }
+}

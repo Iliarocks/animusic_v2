@@ -19,9 +19,9 @@ function search(names, query) {
     return (name.indexOf(query) > -1 || query.indexOf(name) > -1);
   })
   const resultsHTML = results.reduce((html, result) => {
-    return html + `<p>${result}</p>`;
+    return html + `<li class="search-item"><a href="/anime/${result.split(' ').join('-')}">${result}</a></li>`;
   }, '');
-  document.querySelector('.search-results').innerHTML = query === ''?'':resultsHTML;
+  document.querySelector('.search-results').innerHTML = query === ''?'':`<ul class="search-list">${resultsHTML}</ul>`;
 }
 
 function switchNav() {
@@ -33,33 +33,26 @@ function switchNav() {
 }
 
 async function loadGenre(anime, genre) {
-    var genreArr = await genre === 'popular' ? anime.slice(0, 6):anime.filter(anime => anime.genre === genre).slice(0, 6);
+    var genreArr = await genre === 'Popular' ? anime.slice(0, 6):anime.filter(anime => anime.genre === genre.toLowerCase()).slice(0, 6);
     var genreHTML = await genreArr.reduce((html, anime) => {
         return html +
-        `<li class="anime-item">
+        `<li style="background-image: url(${anime.cover_src});" class="anime-item">
           <a class="anime-link" href="/anime/${anime.en_name.split(' ').join('-')}">
-            <h1 class="anime-en">${anime.en_name}</h1>
-            <h2 class="anime-jap">${anime.jap_name}</h2>
-            <i class="fad fa-heart-circle"></i>
-            <span class="anime-likes">${anime.likes}</span>
-            <img class="anime-image" src="${anime.cover_src}">
+            <h1 class="anime-text anime-en">${anime.en_name}</h1>
+            <h2 class="anime-text anime-jap">${anime.jap_name}</h2>
+            <span class="anime-text anime-likes"><i class="fad fa-heart-circle"></i>${anime.likes}</span>
           </a>
         </li>`
     }, '')
     document.querySelector('main').innerHTML += `
     <a class="genre-link" href="/genre/${genre}">${genre}</a>
-    <div class="genre-holder">
-      <ul class="anime-list">
-        ${genreHTML}
-      </ul>
-    </div>
-    `
+    <ul class="genre-list ${genre}">${genreHTML}</ul>`
 };
 
 function loadAnime() {
     database.ref('/anime').once('value', function(snap) {
         var anime = Object.values(snap.val()).sort((a, b) => b.likes - a.likes).slice(0, 250);
-        var genres = ['popular', 'shonen'];
+        var genres = ['Popular', 'Shonen'];
         genres.forEach(genre => loadGenre(anime, genre))
     })
 };
@@ -121,5 +114,5 @@ function clickInput() {
 };
 
 function fadeIn(element) {
-    element.style.opacity = '1';
+    element.style.opacity = '0.8';
 }
