@@ -25,7 +25,7 @@
                 <a class="nav-link">
                     <i class="fad fa-search"></i>
                     <span class="link-text search-span">
-                        <input id="search" type="text" class="link-input search" placeholder="Search">
+                        <input aria-label="search" id="search" type="text" class="link-input search" placeholder="Search">
                         <div class="search-results"></div>
                     </span>
                 </a>
@@ -54,8 +54,10 @@
         <form class="popup-content">
             <button id="close-popup" type="reset" onclick="closePopup()"><i class="fas fa-times"></i></button>
             <h1>Add anime</h1>
-            <input id="en-input" type="text" class="popup-input" placeholder="Anime name (en)">
-            <input id="jap-input" type="text" class="popup-input" placeholder="Anime name (jap)">
+            <label for="en-input">Anime name (en)</label>
+            <input id="en-input" type="text" class="popup-input" autofocus>
+            <label for="jap-input">Anime name (jap)</label>
+            <input id="jap-input" type="text" class="popup-input">
             <select id="genre-select">
                 <option selected disabled>Genre</option>
                 <option value="shonen">Shonen</option>

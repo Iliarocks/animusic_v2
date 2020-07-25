@@ -1,0 +1,103 @@
+:root {
+    font-size: 17px;
+    font-family: 'Open sans';
+    --transition-speed: 600ms;
+    --error-red: red;
+    --grey1: #cccccc;
+    --blue1: #020330;
+    --blue2: #010247;
+    --blue3: #03045E;
+    --blue4: #0077B6;
+    --blue5: #00B4D8;
+    --blue6: #90E0EF;
+    --blue7: #CAF0F8;
+}
+
+* {
+    marign: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+}
+
+form {
+    box-shadow: 0 0 15px rgba(0, 127, 182, 0.2);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    height: auto;
+}
+
+form i {
+    float: right;
+    color: var(--blue4);
+    font-size: 1rem;
+}
+
+form h1 {
+    text-transform: capitalize;
+}
+
+form input {
+    outline-color: var(--blue4);
+    border: 1px solid var(--grey1);
+    padding: 0.6rem;
+    border-radius: 2px;
+    font-size: 1rem;
+    margin: 0.5rem 0 1rem;
+    width: 100%;
+}
+
+form button {
+    float: right;
+    padding: 1rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    background: var(--blue2);
+    color: white;
+    border-radius: 3.5px;
+    border: none;
+    text-transform: capitalize;
+}
+
+form a {
+    color: var(--blue3);
+    text-transform: capitalize;
+}
+
+input::placeholder {
+    color: transparent;
+}
+
+input[type="email"]:not(:placeholder-shown):invalid {
+    border: 1px solid var(--error-red);
+}
+
+input[type="password"] {
+    margin-bottom: 1.5rem;
+}
+
+/* small screens */
+@media only screen and (max-width: 599px) {
+    form {
+        width: 84%;
+        margin: 8vw 8vw 0;
+        padding-bottom: 3rem;
+    }
+}
+
+@media only screen and (min-width: 599px) {
+    body {
+        display: grid;
+        place-items: center;
+    }
+
+    form {
+        width: 20rem;
+    }
+}

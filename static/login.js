@@ -1,12 +1,6 @@
 const auth = firebase.auth();
 let user;
 
-window.onload = () => {
-    if (window.action === 'sign in') {
-        document.querySelector('#name-input').style.display = 'none';
-    }
-}
-
 auth.onAuthStateChanged(currUser => {
     if (currUser) {
         user = currUser;
@@ -21,14 +15,14 @@ function sendVerification() {
 }
 
 function login() {
-    const name = document.querySelector('#name-input').value.split(' ').join('_');
-    const email = document.querySelector('#email-input').value;
-    const pass = document.querySelector('#password-input').value;
+    const email = document.querySelector('#email').value;
+    const pass = document.querySelector('#password').value;
     if (window.action === 'sign up') {
+        const name = document.querySelector('#username').value;
+        if (name === '') { alert('name is missing'); return; }
         auth.createUserWithEmailAndPassword(email, pass)
             .then(result => {
                 result.user.updateProfile({ displayName: name });
-                sendVerification()
             })
             .catch(err => alert(err.message))
     } else if (window.action === 'sign in') {

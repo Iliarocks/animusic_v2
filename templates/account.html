@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <title>Animusic | Settings</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='account.css') }}">
     <script src="https://kit.fontawesome.com/1984d39098.js" crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
@@ -32,8 +33,8 @@
                     <span class="link-text">Home</span>
                 </a>
             </li>
-            <li class="nav-link" class="nav-item">
-                <a onclick="signOut()">
+            <li class="nav-item">
+                <a onclick="signOut()" class="nav-link">
                     <i class="fad fa-sign-out-alt"></i>
                     <span class="link-text">Logout</span>
                 </a>
@@ -41,20 +42,32 @@
         </ul>
     </nav>
     <main>
-        <h1>Change Name</h1>
-        <input id="new-name" type="text" class="setting-input" placeholder="New name">
-        <button onclick="changeName()" id="change-name" type="button" class="setting-button">Change Name</button>
 
-        <h1>Change Email</h1>
-        <input id="curr-pass1" type="password" class="setting-input" placeholder="Current password">
-        <input id="new-email" type="email" class="setting-input" placeholder="New email">
-        <button onclick="reAuth('email')" id="change-email" type="button" class="setting-button">Change Email</button>
+        <form class="change-name">
+            <h1>Change Name</h1>
+            <label for="new-name">New Nickname</label>
+            <input id="new-name" type="text" class="setting-input" autocomplete="nickname" autofocus>
+            <button onclick="changeName()" type="button" class="setting-button">Change Name</button>
+        </form>
 
-        <h1>Change Password</h1>
-        <input id="curr-pass2" type="password" class="setting-input" placeholder="Current password">
-        <input id="new-pass1" type="password" class="setting-input" placeholder="New password">
-        <input id="new-pass2" type="password" class="setting-input" placeholder="Retype new password">
-        <button onclick="reAuth('pass')" id="change-password" type="button" class="setting-button">Change Password</button>
+        <form class="change-email">
+            <h1>Change Email</h1>
+            <label for="curr-pass1">Current Password</label>
+            <input name="current-password1" id="curr-pass1" type="password" class="setting-input" autocomplete="current-password">
+            <label for="new-email">New Email</label>
+            <input name="new-email" id="new-email" type="email" class="setting-input" autocomplete="email">
+            <button onclick="reAuth('email')" type="button" class="setting-button">Change Email</button>
+        </form>
+
+        <form class="change-password">
+            <h1>Change Password</h1>
+            <label for="curr-pass2">Current Password</label>
+            <input name="current-password2" id="curr-pass2" type="password" class="setting-input" autocomplete="current-password">
+            <label for="new-pass">New Password</label>
+            <input name="new-password" id="new-pass" type="password" class="setting-input" autocomplete="new-password">
+            <button onclick="reAuth('pass')" type="button" class="setting-button">Change Password</button> 
+        </form>
+
     </main>
     <script type="text/javascript">
         //firebase config

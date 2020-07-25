@@ -1,6 +1,6 @@
 const database = firebase.database();
 const auth = firebase.auth();
-var anime, animeNamesw
+var anime, animeNames;
 
 auth.onAuthStateChanged(user => {
   if (user) {

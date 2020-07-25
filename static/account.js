@@ -77,19 +77,13 @@ function changeName() {
 function changeEmail() {
     const newEmail = document.querySelector('#new-email').value;
     user.updateEmail(newEmail)
-        .then(() => sendVerificationEmail())
         .catch(err => alert(err.message));
 }
 
 //change user password
 function changePass() {
-    const newPass1 = document.querySelector('#new-pass1').value;
-    const newPass2 = document.querySelector('#new-pass2').value;
-    if (newPass1 !== newPass2) {
-        alert('Passwords do not match');
-        return;
-    }
-    user.updatePassword(newPass1)
+    const newPass = document.querySelector('#new-pass').value;
+    user.updatePassword(newPass)
         .then(() => alert('your password has been changed'))
         .catch(err => alert(err.message));  
 }

@@ -52,7 +52,7 @@ async function loadGenre(anime, genre) {
 function loadAnime() {
     database.ref('/anime').once('value', function(snap) {
         var anime = Object.values(snap.val()).sort((a, b) => b.likes - a.likes).slice(0, 250);
-        var genres = ['Popular', 'Shonen'];
+        var genres = ['Popular', 'Shonen', 'Isekai'];
         genres.forEach(genre => loadGenre(anime, genre))
     })
 };
@@ -85,10 +85,6 @@ async function addAnime() {
 };
 
 function openPopup() {
-    if (auth.currentUser === null) {
-      alert('Sign in to add anime');
-      return;
-    }
     document.querySelector('.popup').style.display = 'grid';
 };
 

@@ -2,6 +2,8 @@
     font-size: 17px;
     font-family: 'Open sans';
     --transition-speed: 600ms;
+    --error-red: red;
+    --grey1: #cccccc;
     --blue1: #020330;
     --blue2: #010247;
     --blue3: #03045E;
@@ -126,7 +128,7 @@ main {
     position: absolute;
     background: white;
     width: 9rem;
-    z-index: 1000;
+    z-index: 2000;
 }
 
 .search-list {
@@ -151,9 +153,9 @@ main {
 
 .popup {
     display: none;
-    place-items: center;
     background: rgba(0, 0, 0, 0.5);
     position: fixed;
+    z-index: 1000;
 }
 
 .popup-content {
@@ -164,10 +166,10 @@ main {
 .popup-input {
     border: none;
     outline: none;
-    padding: 0.9rem 0;
+    padding: 0.9rem;
     background: white;
-    border-bottom: 2px solid var(--blue7);
-    font-weight: 600;
+    border: 1px solid var(--grey1);
+    margin: 0.5rem 0 1rem;
 }
 
 .popup-button {
@@ -211,6 +213,7 @@ main {
     height: 10rem;
     margin: 1rem 0;
     overflow: scroll;
+    overflow-y: hidden;
 }
 
 .anime-item {
@@ -278,8 +281,9 @@ main {
     }
 
     .popup-content {
-        height: 20rem;
+        height: 23rem;
         width: 90%;
+        margin: 5% 5% 0;
     }
 
     .popup-content h1 {
@@ -290,6 +294,7 @@ main {
         font-size: 1.2rem;
         margin-bottom: 0.5rem;
         width: 85%;
+        margin-right: 5%;
     }
 
     .popup-button {
@@ -321,7 +326,7 @@ main {
         top: 0;
         width: 5rem;
         height: 100vh;
-        overflow-y: scroll;
+        overflow-y: auto;
     }
 
     .navbar:hover {
@@ -336,12 +341,13 @@ main {
         height: 100vh;
         width: 100vw;
         padding-left: 5rem;
+        place-items: center;
     }
     
     .popup-content {
         position: relative;
         width: 21rem;
-        height: 20rem;
+        height: 23rem;
     }
 
     .popup-content h1 {
@@ -361,8 +367,7 @@ main {
     }
 
     .popup-input {
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
+        font-size: 1rem;
         width: 16.5rem;
     }
 
