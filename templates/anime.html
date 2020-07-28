@@ -4,61 +4,64 @@
     <meta charset="utf-8">
     <title>Animusic | {{ anime }}</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='anime.css') }}">
     <script src="https://kit.fontawesome.com/1984d39098.js" crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-database.js"></script>
   </head>
-  <body onload="loadAnime()">
+  <body onload="loadAnime('{{ anime }}')">
     <nav class="navbar">
       <ul class="navbar-nav">
         <li class="logo">
             <a href="/" class="nav-link">
-                <span class="link-text"><span style="color:#80ff7e;">Ani</span>music</span>
+                <span class="link-text">Animusic</span>
                 <i class="fad fa-angle-double-right"></i>
             </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item nav-search">
             <a class="nav-link">
                 <i class="fad fa-search"></i>
-                <span class="link-text">
-                    <input id="search" type="text" class="link-input" placeholder="Search">
+                <span class="link-text search-span">
+                    <input id="search" type="text" class="link-input search" placeholder="Search">
                     <div class="search-results"></div>
                 </span>
             </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/">
-            <i class="fad fa-bookmark"></i>
-            <span class="link-text">Favorites</span>
-          </a>
-        </li>
         <li id="account-item" class="nav-item">
-          <a href="/account">
+          <a class="nav-link" href="/account">
             <i class="fad fa-cog"></i>
             <span class="link-text">Settings</span>
           </a>
         </li>
       </ul>
     </nav>
+    <div class="popup" style="display: none;">
+      <form class="popup-content">
+        <i onclick="closePopup()" class="far fa-times"></i>
+        <h1>Add song</h1>
+        <input id="spotify-input" type="text" placeholder="Spotify song link">
+        <button onclick="addSong()" type="button" name="button"><i class="fad fa-check"></i></button>
+      </form>
+    </div>
     <main>
-      <div class="popup">
-        <form class="popup-content">
-          <i onclick="closePopup()" class="far fa-times"></i>
-          <h1>Add song</h1>
-          <input id="spotify-input" type="text" placeholder="Spotify song link">
-          <button onclick="addSong()" type="button" name="button"><i class="fad fa-check"></i></button>
-        </form>
-      </div>
-      <div class="anime-info">
-        <img id="anime-cover" src="" alt="">
+      <div class="anime-info" style="background-size: cover;background:#ccc;">
         <h1 id="anime-en"></h1>
         <h2 id="anime-jap"></h2>
-        <p id="anime-likes"></p>
-        <button class="signed-in" type="button" onclick="openPopup()"><i class="fad fa-plus-circle"></i></button>
+        <h3 id="anime-genre"></h3>
+        <span id="likes-span">
+          <i id="like-button" class="fad fa-heart-circle"></i>
+          <p id="anime-likes"></p>
+        </span>
+        <button onclick="openPopup()"><i class="far fa-plus-circle"></i></button>
       </div>
-      <div class="anime-songs">
-        <ul class="anime-song-list"></ul>
+      <ul class="song-holder"></ul>
+      <div class="comments">
+        <form class="comments-form">
+          <input id="comment-input" type="text">
+          <button id="add-comment" type="reset"><i class="fad fa-paper-plane"></i></button>
+        </form>
+        <ul class="comment-holder"></ul>
       </div>
     </main>
     <script type="text/javascript">

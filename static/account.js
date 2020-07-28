@@ -10,7 +10,7 @@ auth.onAuthStateChanged(currUser => {
         loadProfile();
     } else {
         console.log('logged out')
-        user = '';
+        user = null;
         window.location = window.origin;
     }
 })
@@ -20,9 +20,9 @@ function loadProfile() {
     const name = user.displayName;
     if (!profileURL || !name) return;
     document.querySelector('#profile-pic-item').innerHTML = `
-        <a onclick="clickInput()">
-            <img onload="fadeIn(event.target)" src="${profileURL}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;opacity:0;transition:300ms;">
-            <span class="item-text">${name}</span>
+        <a class="nav-link" onclick="clickInput()">
+            <img clas onload="fadeIn(event.target)" src="${profileURL}">
+            <span class="link-text">${name}</span>
             <input accept="image/x-png, image/jpeg" onchange="changeProfilePic()" type="file" id="profile-pic-input" hidden>
          </a>
     `

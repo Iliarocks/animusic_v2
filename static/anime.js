@@ -3,12 +3,7 @@ const auth = firebase.auth();
 var anime, animeNames;
 
 auth.onAuthStateChanged(user => {
-  if (user) {
-    document.querySelectorAll('.signed-in').forEach(element => element.style.display = 'block');
-  } else {
-    switchNav()
-    document.querySelectorAll('.signed-in').forEach(element => element.style.display = 'none'); 
-  }
+  if (!user) switchNav();
 })
 
 function switchNav() {
@@ -19,30 +14,46 @@ function switchNav() {
   </a>`
 }
 
-database.ref(`/anime/${anime}/likes`).on('value', snap => {
+database.ref(`/anime/${anime}/likes`).on('value', function(snap) {
   document.querySelector('#anime-likes').innerText = snap.val();
 })
 
-function likeEvent() {
-  document.querySelector('#anime-likes').addEventListener('click', function() {
-    database.ref(`/anime/${anime}/likes`).once('value', snap => {
-      var currLikes = snap.val();
-      database.ref(`/anime/${anime}`).update({ likes:currLikes + 1 })
-    })
+database.ref(`/anime/${anime}/comments`).on('value', function(snap) {
+  if (!snap.val()) return;
+  loadComments(Object.values(snap.val()))
+})
+
+function loadAnime(animeRef) {
+  anime = animeRef
+  database.ref(`/anime/${anime}`).once('value', function(snap) {
+    var animeObj = snap.val();
+    document.querySelector('.anime-info').style.backgroundImage = `url(${animeObj.cover_src})`;
+    document.querySelector('#anime-en').innerText = animeObj.en_name;
+    document.querySelector('#anime-jap').innerText = animeObj.jap_name;
+    document.querySelector('#anime-genre').innerText = animeObj.genre;
+    if (animeObj.songs === undefined) return;
+    loadSongs(Object.values(animeObj.songs));
   })
 }
 
-function loadAnime() {
-  anime = window.anime;
-  database.ref(`/anime/${anime}`).once('value', function(snap) {
-    if (snap.val() === null) return;
-    document.querySelector('#anime-en').innerText = snap.val().en_name;
-    document.querySelector('#anime-jap').innerText = snap.val().jap_name;
-    document.querySelector('#anime-cover').src = snap.val().cover_src;
-    likeEvent();
-    if (snap.val().songs === undefined) return;
-    loadSongs(Object.values(snap.val().songs));
-  })
+
+
+function loadComments(comments) {
+  if (!comments) return;
+  const yourComments = comments.filter(comment => comment.commenter_id === auth.currentUser.uid);
+  const allComments = comments.filter(comment => comment.commenter_id !== auth.currentUser.uid).sort((a, b) => b.upvotes - a.upvotes);
+  const yourCommentsHTML = yourComments.reduce((html, comment) => html + `<li class="comment"> | ${comment.commenter_name} | ${comment.comment} | ${comment.upvotes}</li>`, '');
+  const allCommentsHTML = allComments.reduce((html, comment) => html + `<li class="comment">${comment.commenter_name} | ${comment.comment} | ${comment.upvotes}</li>`, '')
+  document.querySelector('.comment-holder').innerHTML = yourCommentsHTML + allCommentsHTML;
+}
+
+function loadSongs(songs) {
+  const songHTML = songs.reduce((html, song) => html + `<li class="song" style="width:300px;heigh:380px;">${song.embeded}</li>`, '')
+  document.querySelector('.song-holder').innerHTML = songHTML;
+}
+
+function addComment(comment) {
+  database.ref(`/anime/${anime}/comments`).push({ comment, upvotes: 0, commenter_id: auth.currentUser.uid, commenter_name: auth.currentUser.displayName}).catch(err => alert(err));
 }
 
 function search(names, query) {
@@ -50,16 +61,9 @@ function search(names, query) {
     return (name.indexOf(query) > -1 || query.indexOf(name) > -1);
   })
   const resultsHTML = results.reduce((html, result) => {
-    return html + `<p>${result}</p>`;
+    return html + `<li class="search-item"><a href="/anime/${result.split(' ').join('-')}">${result}</a></li>`;
   }, '');
-  document.querySelector('.search-results').innerHTML = query === ''?'':resultsHTML;
-}
-
-function loadSongs(songs) {
-  var songsHTML = songs.reduce((html, song) => {
-    return html + `<li class="song-item">${song.embeded}</li>`;
-  }, '');
-  document.querySelector('.anime-song-list').innerHTML = songsHTML;
+  document.querySelector('.search-results').innerHTML = query === ''?'':`<ul class="search-list">${resultsHTML}</ul>`;
 }
 
 function addSong() {
@@ -76,13 +80,18 @@ document.querySelector('#search').addEventListener('keyup', async function(event
   window.clearTimeout();
   const query = event.target.value.toLowerCase();
   if (!animeNames) {
-    animeNames = await database.ref('/anime').once('value').then(snap => {
-      return Object.values(snap.val()).map(anime => anime.en_name.toLowerCase());
-    })
+    animeNames = await database.ref('/anime').once('value').then(snap => Object.values(snap.val()).map(anime => anime.en_name.toLowerCase()))
     window.setTimeout(() => search(animeNames, query), 400)
   } else {
     window.setTimeout(() => search(animeNames, query), 400)
   }
+})
+
+document.querySelector('#like-button').addEventListener('click', function(event) {
+  database.ref(`/anime/${anime}/likes`).once('value', snap => {
+    const currLikes = snap.val();
+    database.ref(`/anime/${anime}`).update({ likes: currLikes + 1})
+  })
 })
 
 function fadeIn(element) {
@@ -96,3 +105,15 @@ function openPopup() {
 function closePopup() {
   document.querySelector('.popup').style.display = 'none';
 }
+
+document.querySelector('#add-comment').addEventListener('click', function(event) {
+  const comment = document.querySelector('#comment-input').value;
+  if (!comment) {
+    alert("Comment can't be empty");
+    return
+  } else if (!auth.currentUser) {
+    alert('You have to sign in to comment');
+    return;
+  }
+  addComment(comment)
+})

@@ -21,10 +21,10 @@
               </a>
           </li>
             <li id="profile-pic-item" class="nav-item">
-                <a class="nav-link" onclick="clickInput()">
+                <a id="profile-item-link" class="nav-link" onclick="clickInput()">
                     <i class="fad fa-user-circle"></i>
                     <span class="link-text">Username</span>
-                    <input accept="image/x-png, image/jpeg" ocnchange="changeProfilePic()" type="file" id="profile-pic-input" hidden>
+                    <input accept="image/x-png, image/jpeg" onchange="changeProfilePic()" type="file" id="profile-pic-input" hidden>
                 </a>
             </li>
             <li class="nav-item">
@@ -55,7 +55,7 @@
             <label for="curr-pass1">Current Password</label>
             <input name="current-password1" id="curr-pass1" type="password" class="setting-input" autocomplete="current-password">
             <label for="new-email">New Email</label>
-            <input name="new-email" id="new-email" type="email" class="setting-input" autocomplete="email">
+            <input name="new-email" id="new-email" type="email" class="setting-input" autocomplete="email" placeholder="email">
             <button onclick="reAuth('email')" type="button" class="setting-button">Change Email</button>
         </form>
 

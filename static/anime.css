@@ -30,51 +30,6 @@ body {
 main {
     margin-left: 5rem;
     padding: 1.5rem 5%;
-    display: grid;
-    place-items: center;
-    grid-template-columns: repeat(auto-fit, 20rem);
-    grid-gap: 1.5rem;
-}
-
-main form {
-    width: 20rem;
-    border: 1rem;
-    box-shadow: 0 0 15px rgba(0, 127, 182, 0.2);
-    padding: 1rem;
-}
-
-form h1 {
-    margin-bottom: 1rem;
-}
-
-input::placeholder {
-    color: transparent;
-}
-
-input[type="email"]:not(:placeholder-shown):invalid {
-    border: 1px solid var(--error-red);
-}
-
-form input {
-    outline-color: var(--blue4);
-    border: 1px solid var(--grey1);
-    padding: 0.6rem;
-    border-radius: 2px;
-    font-size: 1rem;
-    margin: 0.5rem 0 1rem;
-    width: 100%;
-}
-
-form button {
-    float: right;
-    padding: 1rem;
-    cursor: pointer;
-    font-size: 0.9rem;
-    background: var(--blue2);
-    color: white;
-    border-radius: 3.5px;
-    border: none;
-    text-transform: capitalize;
 }
 
 .navbar {
@@ -126,16 +81,6 @@ form button {
 .nav-link i {
     font-size: 2rem;
     margin: 0 1.5rem;
-}
-
-.nav-link img {
-    opacity: 0;
-    transition: 350ms;
-    width: 2.3rem;
-    height: 2.3rem;
-    margin: 0 1.5rem;
-    border-radius: 50%;
-    object-fit: cover;
 }
 
 .nav-link i {
@@ -206,8 +151,23 @@ form button {
     color: black;
 }
 
+.popup {
+    display: none;
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    z-index: 1000;
+}
+
+.anime-info {
+    width: 100%;
+    height: 15rem;
+    background-attachment: fixed;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+}
+
 /* small screens */
-@media only screen and (max-width: 599px) {
+@media screen and (max-width: 600px) {
     .navbar {
         bottom: 0;
         width: 100vw;
@@ -229,11 +189,16 @@ form button {
     main {
         margin: 0;
         margin-bottom: 5rem;
-        grid-template-columns: 1fr;
     }
 
     .nav-search {
         display: none;
+    }
+
+    .popup {
+        height: 100vh;
+        width: 100vw;
+        padding-bottom: 5rem;
     }
 }
 
@@ -254,7 +219,10 @@ form button {
         display: block;
     }
 
-    main form {
-        height: 19.5rem;
+    .popup {
+        height: 100vh;
+        width: 100vw;
+        padding-left: 5rem;
+        place-items: center;
     }
 }
