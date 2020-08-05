@@ -20,7 +20,7 @@ database.ref(`/anime/${anime}/likes`).on('value', function(snap) {
 
 database.ref(`/anime/${anime}/comments`).on('value', function(snap) {
   if (!snap.val()) return;
-  loadComments(Object.values(snap.val()))
+  loadComments(Object.values(snap.val()));
 })
 
 function loadAnime(animeRef) {
