@@ -4,80 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Animusic</title>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
-    <script src="https://kit.fontawesome.com/1984d39098.js" crossorigin="anonymous"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-database.js"></script>
+    <script defer src="{{ url_for('static', filename='index.js') }}"></script>
 </head>
-<body onload="loadAnime()">
+<body>
     <nav class="navbar">
         <ul class="navbar-nav">
-            <li class="logo">
-                <a href="/" class="nav-link">
-                    <span class="link-text">Animusic</span>
-                    <i class="fad fa-angle-double-right"></i>
-                </a>
-            </li>
-            <li class="nav-item nav-search">
-                <a class="nav-link">
-                    <i class="fad fa-search"></i>
-                    <span class="link-text search-span">
-                        <input aria-label="search" id="search" type="text" class="link-input search" placeholder="Search">
-                        <div class="search-results"></div>
-                    </span>
-                </a>
-            </li>
             <li class="nav-item">
-                <a class="nav-link signed-in" onclick="openPopup()">
-                    <i class="fad fa-plus-circle"></i>
-                    <span class="link-text">Create</span>
-                </a>
-            </li>
-            <li id="account-item" class="nav-item signed-in">
-                <a class="nav-link" href="/account">
-                    <i class="fad fa-cog"></i>
-                    <span class="link-text">Settings</span>
-                </a>
+                <a class="nav-link" href="#">add anime</a>
             </li>
         </ul>
     </nav>
-    <div class="popup">
-        <form class="popup-content">
-            <button id="close-popup" type="reset" onclick="closePopup()"><i class="fas fa-times"></i></button>
-            <h1>Add anime</h1>
-            <label for="en-input">Anime name (en)</label>
-            <input id="en-input" type="text" class="popup-input" autofocus>
-            <label for="jap-input">Anime name (jap)</label>
-            <input id="jap-input" type="text" class="popup-input">
-            <select id="genre-select">
-                <option selected disabled>Genre</option>
-                <option value="shonen">Shonen</option>
-                <option value="isekai">Isekai</option>
-            </select>
-            <button onclick="clickInput()" type="button" id="file-button" class="popup-button"><i class="fad fa-file-image"></i></button>
-            <input id="cover-input" type="file" accept="image/*" hidden>
-            <button onclick="addAnime()" class="popup-button" type="button"><i class="fad fa-check-circle"></i></button>
+    <main class="main">
+        <div class="popup">
+            <form class="popup-content">
+                <label for="en-name">Anime Name (en)</label>
+                <input id="en-name" class="popop-input" type="text">
+                <label for="jap-name">Anime Name (jap)</label>
+                <input id="jap-name" class="popop-input" type="text">
+                <select id="genre-select">
+                    <option value="genre" selected disabled>Genre</option>
+                    <option value="shonen">Shonen</option>
+                    <option value="isekai">Isekai</option>
+                </select>
+                <button id="add-anime" type="reset">Submit</button>
+            </form>
+        </div>
+        <form class="search">
+            <label for="search">Search</label>
+            <input id="search" type="text">
+            <ul id="search-results"></ul>
         </form>
-    </div>
-    <main>
+        <div class="anime"></div>
     </main>
-    <script type="text/javascript">
-        //firebase config
-        var config = {
-            apiKey: "AIzaSyC14XiFk8naG0gkW-ev7YRbxU0FLY8k_yI",
-            authDomain: "animusic-da89e.firebaseapp.com",
-            databaseURL: "https://animusic-da89e.firebaseio.com",
-            projectId: "animusic-da89e",
-            storageBucket: "animusic-da89e.appspot.com",
-            messagingSenderId: "363034068126",
-            appId: "1:363034068126:web:c73a87ff751c2292a1a78f",
-            measurementId: "G-457KQF3VP7"
-        };
-        firebase.initializeApp(config);
-    </script>
-    <script defer type="text/javascript" src="{{ url_for('static', filename='index.js') }}"></script>
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyC14XiFk8naG0gkW-ev7YRbxU0FLY8k_yI",
+        authDomain: "animusic-da89e.firebaseapp.com",
+        databaseURL: "https://animusic-da89e.firebaseio.com",
+        projectId: "animusic-da89e",
+        storageBucket: "animusic-da89e.appspot.com",
+        messagingSenderId: "363034068126",
+        appId: "1:363034068126:web:c73a87ff751c2292a1a78f",
+        measurementId: "G-457KQF3VP7"      
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+</script>
 </body>
 </html>
