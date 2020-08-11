@@ -27,7 +27,7 @@ const search = (query, animes) => {
         return name.indexOf(query) > -1 || query.indexOf(name) > -1;
     });
     const resultsHTML = results.reduce((html, result) => {
-        return html + `<li class="search-item">${result}</li>`;
+        return html + `<li class="search-item"><a class="search-link" href="/anime/${result}">${result}</a></li>`;
     }, '')
     document.querySelector('#search-results').innerHTML = !query ? '':resultsHTML;
 }
@@ -40,6 +40,7 @@ document.querySelector('#search').addEventListener('keyup', async event => {
     if (!animeToSearch) animeToSearch = await db.ref('/anime').once('value').then(snap => {
         return Object.values(snap.val()).map(anime => anime.en_name).sort((a, b) => b.likes - a.likes);
     });
-    search(query, animeToSearch)
+    window.clearTimeout()
+    window.setTimeout(() => search(query, animeToSearch), 400)
 })
 

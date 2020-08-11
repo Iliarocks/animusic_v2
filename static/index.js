@@ -10,9 +10,9 @@ const loadAnime = () => {
 }
 
 const loadGenre = (genre, animes) => {
-    const filteredAnimes = genre === 'popular'?animes.sort((a, b) => b.likes - b.likes).slice(0, 6):animes.filter(anime => anime.genre === genre).slice(0, 6);
+    const filteredAnimes = genre === 'popular'?animes.sort((a, b) => b.likes - a.likes).slice(0, 6):animes.filter(anime => anime.genre === genre).slice(0, 6);
     const animesHTML = filteredAnimes.reduce((html, anime) => {
-        return html + `<li class="anime-item"><a href="/anime/${anime.en_name}">${anime.en_name}</a></li>`
+        return html + `<li class="anime-item"><a class="anime-link" href="/anime/${anime.en_name}">${anime.en_name}</a></li>`
     }, '');
     document.querySelector('.anime').innerHTML += `<h1 class="genre-title">${genre}</h1><ul>${animesHTML}</ul>`;
 }
@@ -31,9 +31,9 @@ const search = (query, animes) => {
         return name.indexOf(query) > -1 || query.indexOf(name) > -1;
     })
     const resultsHTML = results.reduce((html, result) => {
-        return html + `<li class="search-item">${result}</li>`;
+        return html + `<li class="search-item"><a class="search-link" href="/anime/${result}">${result}</a></li>`;
     }, '')
-    document.querySelector('#search-results').innerHTML = !query ? '':resultsHTML;
+    document.querySelector('#search-results').innerHTML = !query? '':resultsHTML;
 }
 
 window.addEventListener('load', loadAnime)
@@ -51,5 +51,6 @@ document.querySelector('#search').addEventListener('keyup', async event => {
     if (!animeToSearch) animeToSearch = await db.ref('/anime').once('value').then(snap => {
         return Object.values(snap.val()).map(anime => anime.en_name).sort((a, b) => b.likes - a.likes);
     });
-    search(query, animeToSearch);
+    window.clearTimeout();
+    window.setTimeout(() => search(query, animeToSearch), 400);
 })
