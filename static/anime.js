@@ -32,8 +32,22 @@ const search = (query, animes) => {
     document.querySelector('#search-results').innerHTML = !query ? '':resultsHTML;
 }
 
+const like = () => {
+    db.ref(`/anime/${anime}/likes`).once('value', snap => {
+        var newLikes = snap.val() + 1;
+        db.ref(`/anime/${anime}`).update({ likes: newLikes });
+    })
+}
+
+db.ref(`/anime/${anime}/likes`).on('value', snap => {
+    document.querySelector('#curr-likes').innerText = snap.val();
+})
+
 document.querySelector('#add-song').addEventListener('click', addSong);
+
 window.addEventListener('load', loadPage);
+
+document.querySelector('#like-anime').addEventListener('click', like)
 
 document.querySelector('#search').addEventListener('keyup', async event => {
     const query = event.target.value.toLowerCase();

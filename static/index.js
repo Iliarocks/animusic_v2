@@ -1,6 +1,12 @@
 const db = firebase.database();
 let animeToSearch;
 
+const randomColor = () => {
+    const colors = ['#ffbb00', '#b3ff00', '#00ccff', '#b300ff'];
+    const randNum = Math.floor(Math.random() * 5);
+    return colors[randNum];
+}
+
 const loadAnime = () => {
     db.ref('/anime').once('value', snap => {
         const genres = ['popular', 'shonen']
@@ -18,10 +24,12 @@ const loadGenre = (genre, animes) => {
 }
 
 const addAnime = (enName, japName, genre) => {
+    const color = randomColor();
     db.ref(`/anime/${enName}`).set({
         en_name: enName,
         jap_name: japName,
         genre: genre,
+        color: color,
         likes: 0
     }).catch(err => alert(err));
 }
