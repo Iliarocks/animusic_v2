@@ -10,13 +10,13 @@ const randomColor = () => {
 const loadAnime = () => {
     db.ref('/anime').once('value', snap => {
         const genres = ['popular', 'shonen']
-        const animes = Object.values(snap.val());
+        const animes = Object.values(snap.val()).sort((a, b) => b.likes - a.likes);
         genres.forEach((genre) => loadGenre(genre, animes))
     })
 }
 
 const loadGenre = (genre, animes) => {
-    const filteredAnimes = genre === 'popular'?animes.sort((a, b) => b.likes - a.likes).slice(0, 6):animes.filter(anime => anime.genre === genre).slice(0, 6);
+    const filteredAnimes = genre === 'popular'?animes.slice(0, 6):animes.filter(anime => anime.genre === genre).slice(0, 6);
     const animesHTML = filteredAnimes.reduce((html, anime) => {
         return html + `<li class="anime-item"><a class="anime-link" href="/anime/${anime.en_name}">${anime.en_name}</a></li>`
     }, '');
