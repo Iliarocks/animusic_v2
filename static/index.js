@@ -23,8 +23,7 @@ const loadGenre = (genre, animes) => {
     document.querySelector('.anime').innerHTML += `<h1 class="genre-title">${genre}</h1><ul>${animesHTML}</ul>`;
 }
 
-const addAnime = (enName, japName, genre) => {
-    const color = randomColor();
+const addAnime = (enName, japName, genre, color) => {
     db.ref(`/anime/${enName}`).set({
         en_name: enName,
         jap_name: japName,
@@ -50,8 +49,9 @@ document.querySelector('#add-anime').addEventListener('click', event => {
     const enName = document.querySelector('#en-name').value.toLowerCase();
     const japName = document.querySelector('#jap-name').value.toLowerCase();
     const genre = document.querySelector('#genre-select').value;
+    const color = randomColor();
     if (!enName || !japName || genre === 'genre') return;
-    addAnime(enName, japName, genre);
+    addAnime(enName, japName, genre, color);
 })
 
 document.querySelector('#search').addEventListener('keyup', async event => {
