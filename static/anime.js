@@ -2,16 +2,25 @@ const db = firebase.database();
 const anime = window.anime;
 let animeToSearch;
 
+const error = message => {
+    alert(message);
+}
+
 const addSong = () => {
     const songURL = document.querySelector('#spotify-input').value;
-    if (!songURL) return;
+    if (!songURL) {
+        error("Make sure you've inserted a stoptify link before pressing the add button.");
+        return
+    }
     const embedded = `<iframe src="https://open.spotify.com/embed/track/${songURL.split('/')[songURL.split('/').length - 1].split('?')[0]}" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
     db.ref(`/anime/${anime}/songs`).push({ embedded });
 }
 
 const loadSongs = () => {
     db.ref(`/anime/${anime}/songs`).once('value', snap => {
-        if (!snap.val()) return;
+        if (!snap.val()) {
+            error('It appears that no songs have been added to this page yet.');
+        }
         const songs = Object.values(snap.val());
         const songsHTML = songs.reduce((html, song) => html + song.embedded, '');
         document.querySelector('.songs').innerHTML = songsHTML;

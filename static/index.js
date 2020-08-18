@@ -1,10 +1,8 @@
 const db = firebase.database();
 let animeToSearch;
 
-const randomColor = () => {
-    const colors = ['#ffbb00', '#b3ff00', '#00ccff', '#b300ff'];
-    const randNum = Math.floor(Math.random() * 5);
-    return colors[randNum];
+const error = message => {
+    alert(message);
 }
 
 const loadAnime = () => {
@@ -23,12 +21,11 @@ const loadGenre = (genre, animes) => {
     document.querySelector('.anime').innerHTML += `<h1 class="genre-title">${genre}</h1><ul>${animesHTML}</ul>`;
 }
 
-const addAnime = (enName, japName, genre, color) => {
+const addAnime = (enName, japName, genre) => {
     db.ref(`/anime/${enName}`).set({
         en_name: enName,
         jap_name: japName,
         genre: genre,
-        color: color,
         likes: 0
     }).catch(err => alert(err));
 }
@@ -49,9 +46,11 @@ document.querySelector('#add-anime').addEventListener('click', event => {
     const enName = document.querySelector('#en-name').value.toLowerCase();
     const japName = document.querySelector('#jap-name').value.toLowerCase();
     const genre = document.querySelector('#genre-select').value;
-    const color = randomColor();
-    if (!enName || !japName || genre === 'genre') return;
-    addAnime(enName, japName, genre, color);
+    if (!enName || !japName || genre === 'genre') {
+        error('something is missing');
+        return;
+    }
+    addAnime(enName, japName, genre);
 })
 
 document.querySelector('#search').addEventListener('keyup', async event => {
