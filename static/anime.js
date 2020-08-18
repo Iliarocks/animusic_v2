@@ -20,6 +20,7 @@ const loadSongs = () => {
     db.ref(`/anime/${anime}/songs`).once('value', snap => {
         if (!snap.val()) {
             error('It appears that no songs have been added to this page yet.');
+            return;
         }
         const songs = Object.values(snap.val());
         const songsHTML = songs.reduce((html, song) => html + song.embedded, '');
