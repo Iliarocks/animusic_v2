@@ -16,7 +16,13 @@ const loadAnime = () => {
 const loadGenre = (genre, animes) => {
     const filteredAnimes = genre === 'popular'?animes.slice(0, 6):animes.filter(anime => anime.genre === genre).slice(0, 6);
     const animesHTML = filteredAnimes.reduce((html, anime) => {
-        return html + `<li class="anime-item"><a class="anime-link" href="/anime/${anime.en_name}">${anime.en_name}</a></li>`
+        return html + `<li class="anime-item">
+            <a class="anime-link" href="/anime/${anime.en_name}">
+                ${anime.en_name}
+                <i class="fas fa-heart"></i>
+                ${anime.likes}
+            </a>
+        </li>`
     }, '');
     document.querySelector('.anime').innerHTML += `<h1 class="genre-title">${genre}</h1><ul>${animesHTML}</ul>`;
 }
