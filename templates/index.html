@@ -13,12 +13,15 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
 </head>
 <body>
-    <nav class="navbar">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="#">add anime</a>
-            </li>
-        </ul>
+    <nav>
+        <a class="logo-link" href="/">
+            <img id="logo" src="{{ url_for('static', filename='images/favicon.ico') }}">
+        </a>
+        <div class="search-div">
+            <i id="search-icon" class="far fa-search"></i>
+            <input id="search" type="text">
+            <ul id="search-results"></ul>
+        </div>
     </nav>
     <main class="main">
         <div class="popup">
@@ -35,11 +38,6 @@
                 <button id="add-anime" type="reset">Submit</button>
             </form>
         </div>
-        <form class="search">
-            <label for="search">Search</label>
-            <input id="search" type="text">
-            <ul id="search-results"></ul>
-        </form>
         <div class="anime"></div>
     </main>
     <footer>

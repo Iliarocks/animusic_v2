@@ -14,8 +14,16 @@
 <body>
     <nav class="navbar">
         <ul class="navbar-nav">
+            <li class="logo-item">
+                <img class="logo" src="{{ url_for('static', filename='images/favicon.ico') }}">
+                <a class="nav-link" href="/">animsuic</a>
+            </li>
             <li class="nav-item">
-                <a class="nav-link" href="/">home</a>
+                <form class="search">
+                    <label for="search">Search</label>
+                    <input id="search" type="text">
+                    <ul id="search-results"></ul>
+                </form>
             </li>
         </ul>
     </nav>
@@ -32,11 +40,6 @@
                 <button id="add-song" type="reset">Add song</button>
             </form>
         </div>
-        <form class="search">
-            <label for="search">Search</label>
-            <input id="search" type="text">
-            <ul id="search-results"></ul>
-        </form>
         <div class="songs"></div>
         <footer>
             version 1.4
