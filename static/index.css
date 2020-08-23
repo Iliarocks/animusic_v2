@@ -26,12 +26,11 @@ nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 10%;
+    border-bottom: 1px solid #f7f7f8;
 }
 
 .search-div {
     height: 40px;
-    width: 50%;
     margin: 5px 0;
     position: relative;
 }
@@ -87,9 +86,22 @@ nav {
 }
 
 @media only screen and (max-width: 600px) {
+    nav {
+        padding: 13px 5%;
+    }
 
+    .search-div {
+        width: 75%;
+    }
 }
 
 @media only screen and (min-width: 600px) {
+    nav {
+        padding: 10px 10%;
+    }
 
+    .search-div {
+        width: 50%;
+        max-width: 600px;
+    }
 }
