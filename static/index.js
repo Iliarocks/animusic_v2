@@ -1,5 +1,6 @@
 const db = firebase.database();
 let animeToSearch;
+let lastColor;
 
 const error = message => {
     alert(message);
@@ -7,24 +8,36 @@ const error = message => {
 
 const loadAnime = () => {
     db.ref('/anime').once('value', snap => {
-        const genres = ['popular', 'shonen']
+        const genres = ['popular', 'shonen', 'isekai']
         const animes = Object.values(snap.val()).sort((a, b) => b.likes - a.likes);
-        genres.forEach((genre) => loadGenre(genre, animes))
+        genres.forEach((genre) => loadGenre(genre, animes));
     })
 }
 
+const getRandColor = () => {
+    const colors = ['#A682FF', '#715AFF', '#5887FF', '#55C1FF', '#80ED99']
+    const randNum = Math.floor(Math.random() * 5);
+    const color = colors[randNum];
+    return color;
+}
+
 const loadGenre = (genre, animes) => {
-    const filteredAnimes = genre === 'popular'?animes.slice(0, 6):animes.filter(anime => anime.genre === genre).slice(0, 6);
+    const filteredAnimes = genre === 'popular'?animes.slice(0, 10):animes.filter(anime => anime.genre === genre).slice(0, 10);
     const animesHTML = filteredAnimes.reduce((html, anime) => {
-        return html + `<li class="anime-item">
+        let randColor = getRandColor();
+        while (randColor === lastColor) {
+            randColor = getRandColor();
+        }
+        lastColor = randColor;
+        return html + `<li class="anime-item" style="background:${randColor}">
             <a class="anime-link" href="/anime/${anime.en_name}">
-                ${anime.en_name}
+                <h2 class="anime-name">${anime.en_name}</h2>
                 <i class="fas fa-heart"></i>
                 ${anime.likes}
             </a>
         </li>`
     }, '');
-    document.querySelector('.anime').innerHTML += `<h1 class="genre-title">${genre}</h1><ul>${animesHTML}</ul>`;
+    document.querySelector('.anime').innerHTML += `<h1 class="genre-title">${genre}</h1><ul class="genre-list">${animesHTML}<span onclick="scrollRight(event.currentTarget )" class="see-more"><i class="far fa-angle-right"></i></span></ul>`;
 }
 
 const addAnime = (enName, japName, genre) => {
@@ -44,6 +57,26 @@ const search = (query, animes) => {
         return html + `<li class="search-item"><a class="search-link" href="/anime/${result}">${result}</a></li>`;
     }, '')
     document.querySelector('#search-results').innerHTML = !query? '':resultsHTML;
+}
+
+const scrollToFirstAnime = (element) => {
+    const sliderTimer = setInterval(() => {
+        element.scrollLeft -= 10;
+        if (element.scrollLeft <= 0) window.clearInterval(sliderTimer);
+    }, 10)
+}
+
+const scrollRight = (div) => {
+    scrollAmount = 0;
+    if (div.parentElement.scrollWidth - div.parentElement.scrollLeft === div.parentElement.clientWidth) {
+        scrollToFirstAnime(div.parentElement)
+        return
+    };
+    const sliderTimer = setInterval(() => {
+        div.parentElement.scrollLeft += 10;
+        scrollAmount += 10;
+        if (scrollAmount >= 448) window.clearInterval(sliderTimer);
+    }, 20)
 }
 
 window.addEventListener('load', loadAnime)

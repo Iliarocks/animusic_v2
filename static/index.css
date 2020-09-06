@@ -10,6 +10,8 @@ main, footer {
 
 main {
     margin-top: 80px;
+    z-index: 1;
+    position: relative;
 }
 
 * {
@@ -33,6 +35,7 @@ nav {
     height: 40px;
     margin: 5px 0;
     position: relative;
+    z-index: 10;
 }
 
 .search-link {
@@ -85,6 +88,40 @@ nav {
     top: 50px;
 }
 
+.genre-list {
+    display: flex;
+    list-style: none;
+    overflow-y: hidden;
+    overflow-x: overlay;
+    width: 100%;
+    padding: 0.5em 0;
+}
+
+.genre-list:last-child {
+    margin-bottom: 40px;
+}
+
+.anime-item {
+    flex-shrink: 0;
+    height: 100%;
+    border-radius: 2px;
+    margin-right: 8px;
+}
+
+.anime-link {
+    width: 100%;
+    height: 100%;
+    color: white;
+    text-decoration: none;
+}
+
+.anime-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
 @media only screen and (max-width: 600px) {
     nav {
         padding: 13px 5%;
@@ -92,6 +129,27 @@ nav {
 
     .search-div {
         width: 75%;
+    }
+
+    main {
+        padding: 10px 0 10px 5%;
+    }
+
+    .genre-list {
+        height: 5.5em;
+    }
+
+    .anime-item {
+        width: 13em;
+        padding: 0.65em 0.5em 0.5em 0.8em;
+    }
+
+    .anime-name {
+        font-size: 1.3em;
+    }
+
+    .see-more {
+        display: none;
     }
 }
 
@@ -103,5 +161,42 @@ nav {
     .search-div {
         width: 50%;
         max-width: 600px;
+    }
+
+    main {
+        padding: 10px 0 10px 10%;
+    }
+
+    .genre-list {
+        position: relative;
+        height: 6em;
+    }
+
+    .genre-list::-webkit-scrollbar {
+        display: none;
+    }
+
+    .anime-item {
+        width: 14em;
+        padding: 0.8em 0.5em 0.5em 0.8em;
+    }
+
+    .anime-name {
+        font-size: 1.5em;
+    }
+
+    .see-more {
+        right: 0;
+        height: 5em;
+        width: 2em;
+        display: grid;
+        color: white;
+        position: fixed;
+        cursor: pointer;
+        place-items: center;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    .see-more > i {
+        font-size: 1.8em;
     }
 }
